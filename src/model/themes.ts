@@ -23,6 +23,16 @@ export const MONTH_THEMES: Theme[] = [
   { ...base, name: 'Pine', primary: '#4f7a68', accent: '#e0a0a0', soft: '#eef5f1', line: '#d3e3da' },
 ];
 
+/** Used for pages that don't belong to a month (cover, year overview). */
+export const DEFAULT_THEME: Theme = {
+  ...base,
+  name: 'Lavender',
+  primary: '#8c74b8',
+  accent: '#c7b5e6',
+  soft: '#f5f1fc',
+  line: '#e2d9f0',
+};
+
 export function themeVars(t: Theme): CSSProperties {
   return {
     '--primary': t.primary,

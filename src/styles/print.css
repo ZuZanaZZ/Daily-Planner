@@ -1,7 +1,4 @@
-@page {
-  size: A5;
-  margin: 0;
-}
+/* The @page size (A5 or A4 landscape) is injected by YearView. */
 
 @media print {
   html,
@@ -14,12 +11,14 @@
     display: none !important;
   }
 
-  .pages {
+  .pages,
+  .sheets {
     display: block;
     padding: 0;
   }
 
-  .pages .page {
+  .pages .page,
+  .sheet {
     box-shadow: none;
     break-after: page;
   }

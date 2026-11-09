@@ -47,13 +47,49 @@ body {
 }
 
 .toolbar button {
-  margin-left: auto;
-  border: 0;
+  border: 1px solid #d8d0e2;
   border-radius: 8px;
-  padding: 8px 14px;
+  padding: 7px 12px;
+  background: #fff;
+  color: inherit;
+  cursor: pointer;
+}
+
+.toolbar button.primary {
+  border-color: #8c74b8;
   background: #8c74b8;
   color: #fff;
-  cursor: pointer;
+}
+
+.toggle {
+  display: flex;
+}
+
+.toggle button:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.toggle button:last-child {
+  border-left: 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.toggle button.is-active {
+  background: #f5f1fc;
+  color: #8c74b8;
+  font-weight: 600;
+}
+
+.toolbar__end {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.toolbar__info {
+  font-size: 13px;
+  color: #7a7080;
 }
 
 .pages {
@@ -64,6 +100,41 @@ body {
   padding: 24px;
 }
 
-.pages .page {
+.pages .page,
+.sheet {
   box-shadow: 0 2px 12px rgb(0 0 0 / 0.12);
+}
+
+.sheets {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px;
+}
+
+.sheet-pair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.sheet-label {
+  font-size: 13px;
+  color: #7a7080;
+}
+
+.help {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  max-width: 320px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.15);
+  font-size: 13px;
+  line-height: 1.45;
 }

@@ -4,6 +4,7 @@ import { Header } from './Header';
 import { TodoList } from './TodoList';
 import { Notes } from './Notes';
 import { MonthCalendar } from './MonthCalendar';
+import { YearGrid } from './YearGrid';
 
 export interface BlockProps<P = Record<string, unknown>> {
   ctx: PageContext;
@@ -68,5 +69,13 @@ export const BLOCKS: Record<string, BlockDef> = {
     defaultProps: { size: 'mini' },
     fields: [{ key: 'size', label: 'Size', kind: 'select', options: ['mini', 'large'] }],
     Component: MonthCalendar,
+  },
+  yearGrid: {
+    type: 'yearGrid',
+    label: 'Year at a glance',
+    defaultSize: { w: 12, h: 30 },
+    defaultProps: {},
+    fields: [],
+    Component: YearGrid,
   },
 };

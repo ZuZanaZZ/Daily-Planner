@@ -28,7 +28,7 @@ export interface Theme {
   font: string;
 }
 
-export type PageKind = 'daily' | 'month-spread';
+export type PageKind = 'cover' | 'year' | 'month-spread' | 'month-plan' | 'daily' | 'notes';
 
 /** A block placed on the page grid (react-grid-layout compatible coordinates). */
 export interface PlacedBlock {
@@ -46,6 +46,20 @@ export interface PageTemplate {
   name: string;
   kind: PageKind;
   blocks: PlacedBlock[];
+}
+
+export interface PlannerConfig {
+  year: number;
+  weekStart: 0 | 1;
+  locale: string;
+  margins: Margins;
+}
+
+/** One concrete A5 page of the generated planner. */
+export interface PlannerPage {
+  key: string;
+  template: PageTemplate;
+  ctx: PageContext;
 }
 
 /** Date information handed to every block while rendering a concrete page. */

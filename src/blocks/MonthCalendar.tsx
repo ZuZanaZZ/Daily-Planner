@@ -16,7 +16,7 @@ export function MonthCalendar({ ctx, props }: BlockProps<{ size: 'mini' | 'large
           </div>
         ))}
         {weeks.flat().map((d, i) => (
-          <div key={i} className={`blk-cal__day${d === null ? ' is-empty' : ''}${d === today ? ' is-today' : ''}`}>
+          <div key={i} className={`blk-cal__day${d === null ? ' is-empty' : ''}${d !== null && d === today ? ' is-today' : ''}`}>
             {d}
           </div>
         ))}

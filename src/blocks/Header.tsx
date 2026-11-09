@@ -18,6 +18,24 @@ export function Header({ ctx, props }: BlockProps<{ align: 'left' | 'center' | '
     );
   }
 
+  if (ctx.kind === 'cover') {
+    return (
+      <div className={`${cls} blk-header--cover`}>
+        <span className="blk-header__sub">planner</span>
+        <span className="blk-header__big">{ctx.year}</span>
+      </div>
+    );
+  }
+
+  if (ctx.kind === 'year') {
+    return (
+      <div className={cls}>
+        <span className="blk-header__title">{ctx.year}</span>
+        <span className="blk-header__sub">year at a glance</span>
+      </div>
+    );
+  }
+
   return (
     <div className={cls}>
       <span className="blk-header__title">{monthName(ctx.locale, ctx.month)}</span>

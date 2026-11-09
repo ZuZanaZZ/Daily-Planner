@@ -16,6 +16,7 @@ export const DAILY_TEMPLATE: PageTemplate = {
   ],
 };
 
+/** Left page of the month spread. */
 export const MONTH_TEMPLATE: PageTemplate = {
   id: 'month-default',
   name: 'Month spread',
@@ -25,4 +26,42 @@ export const MONTH_TEMPLATE: PageTemplate = {
     { id: 'c', type: 'calendar', x: 0, y: 4, w: 12, h: 23, props: { size: 'large' } },
     { id: 'g', type: 'notes', x: 0, y: 28, w: 12, h: 10, props: { title: 'Goals', style: 'lined', spacing: 6 } },
   ],
+};
+
+/** Right page of the month spread. */
+export const MONTH_PLAN_TEMPLATE: PageTemplate = {
+  id: 'month-plan-default',
+  name: 'Month plan',
+  kind: 'month-plan',
+  blocks: [
+    { id: 'h', type: 'header', x: 0, y: 0, w: 12, h: 4, props: { align: 'right' } },
+    { id: 't', type: 'todo', x: 0, y: 5, w: 6, h: 20, props: { title: 'Month to do' } },
+    { id: 'i', type: 'notes', x: 6, y: 5, w: 6, h: 20, props: { title: 'Important dates', style: 'lined', spacing: 6 } },
+    { id: 'n', type: 'notes', x: 0, y: 26, w: 12, h: 12, props: { title: 'Notes', style: 'dotted' } },
+  ],
+};
+
+export const COVER_TEMPLATE: PageTemplate = {
+  id: 'cover-default',
+  name: 'Cover',
+  kind: 'cover',
+  blocks: [{ id: 'h', type: 'header', x: 0, y: 14, w: 12, h: 8, props: { align: 'center' } }],
+};
+
+export const YEAR_TEMPLATE: PageTemplate = {
+  id: 'year-default',
+  name: 'Year at a glance',
+  kind: 'year',
+  blocks: [
+    { id: 'h', type: 'header', x: 0, y: 0, w: 12, h: 4, props: {} },
+    { id: 'y', type: 'yearGrid', x: 0, y: 5, w: 12, h: 33, props: {} },
+  ],
+};
+
+/** Filler page so month spreads always open on a left-hand page. */
+export const NOTES_TEMPLATE: PageTemplate = {
+  id: 'notes-default',
+  name: 'Notes',
+  kind: 'notes',
+  blocks: [{ id: 'n', type: 'notes', x: 0, y: 0, w: 12, h: 38, props: { title: 'Notes', style: 'dotted' } }],
 };
