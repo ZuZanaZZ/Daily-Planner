@@ -1,6 +1,7 @@
+import type { ReactNode, Ref } from 'react';
 import { BLOCKS } from '../blocks/registry';
 import { themeVars } from '../model/themes';
-import { GRID, PAGE, type Margins, type PageContext, type PageTemplate } from '../model/types';
+import { contentWidthMm, GRID, PAGE, type Margins, type PageContext, type PageTemplate } from '../model/types';
 
 interface Props {
   template: PageTemplate;
@@ -8,12 +9,15 @@ interface Props {
   margins: Margins;
   /** Right-hand pages bind on the left; left-hand pages bind on the right. */
   side: 'left' | 'right';
+  /** Extra grid items drawn above the blocks (used by the editor). */
+  children?: ReactNode;
+  contentRef?: Ref<HTMLDivElement>;
 }
 
-export function Page({ template, ctx, margins, side }: Props) {
+export function Page({ template, ctx, margins, side, children, contentRef }: Props) {
   const padLeft = side === 'right' ? margins.inner : margins.outer;
   const padRight = side === 'right' ? margins.outer : margins.inner;
-  const contentWidth = PAGE.width - padLeft - padRight;
+  const width = contentWidthMm(margins);
 
   return (
     <div
@@ -26,10 +30,12 @@ export function Page({ template, ctx, margins, side }: Props) {
       }}
     >
       <div
+        ref={contentRef}
         className="page__content"
         style={{
           gridTemplateColumns: `repeat(${GRID.cols}, 1fr)`,
           gridAutoRows: `${GRID.rowMm}mm`,
+          columnGap: `${GRID.gapMm}mm`,
         }}
       >
         {template.blocks.map((b) => {
@@ -45,12 +51,13 @@ export function Page({ template, ctx, margins, side }: Props) {
               <Component
                 ctx={ctx}
                 props={{ ...def.defaultProps, ...b.props }}
-                widthMm={(contentWidth * b.w) / GRID.cols}
+                widthMm={(width * b.w) / GRID.cols}
                 heightMm={b.h * GRID.rowMm}
               />
             </div>
           );
         })}
+        {children}
       </div>
     </div>
   );

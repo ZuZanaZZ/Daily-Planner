@@ -50,7 +50,6 @@
 
 .page__content {
   display: grid;
-  gap: 0 2mm;
   height: 100%;
 }
 
@@ -237,4 +236,290 @@
 .blk-cal--large .blk-cal__day.is-empty {
   background: var(--soft);
   opacity: 0.6;
+}
+
+/* --- generic rows (each row stretches to fill the block) --- */
+
+.blk-rows {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.blk-line-row {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5mm;
+  padding-bottom: 0.6mm;
+  border-bottom: 0.2mm solid var(--line);
+}
+
+.blk-line-row--top {
+  align-items: flex-start;
+  padding-top: 0.8mm;
+}
+
+.blk-label {
+  font-size: 2.6mm;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* --- hourly planner --- */
+
+.blk-sched__row {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 0.2mm solid var(--line);
+}
+
+.blk-sched__hour {
+  width: 7mm;
+  padding-top: 0.4mm;
+  font-size: 2.5mm;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.blk-sched__half {
+  position: absolute;
+  top: 50%;
+  left: 7mm;
+  right: 0;
+  border-top: 0.2mm dashed var(--line);
+}
+
+/* --- priorities --- */
+
+.blk-prio__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.6mm;
+  height: 3.6mm;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 2.3mm;
+  font-weight: 800;
+}
+
+/* --- icons (water, mood) --- */
+
+.blk-icons {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1.5mm;
+  min-height: 0;
+  padding: 0.5mm 1mm;
+}
+
+.blk-icons--spread {
+  justify-content: space-around;
+}
+
+.blk-icon {
+  height: min(100%, 8mm);
+  max-width: 8mm;
+  flex: 0 1 auto;
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 0.9;
+  stroke-linecap: round;
+}
+
+.blk-icon .fill {
+  fill: var(--primary);
+  stroke: none;
+}
+
+/* --- habit checklist --- */
+
+.blk-checks {
+  flex: 1;
+  display: grid;
+  align-content: space-evenly;
+  gap: 1mm 3mm;
+  padding: 0.5mm 0;
+}
+
+.blk-checks__item {
+  display: flex;
+  align-items: center;
+  gap: 1.5mm;
+  font-size: 2.7mm;
+}
+
+.blk-checks__item .blk-todo__check {
+  margin-left: 0;
+  flex: none;
+}
+
+/* --- week strip --- */
+
+.blk-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+.blk-week__day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5mm;
+}
+
+.blk-week__name {
+  font-size: 2.3mm;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.blk-week__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 5mm;
+  height: 5mm;
+  border-radius: 50%;
+  font-size: 2.7mm;
+}
+
+.blk-week__day.is-today .blk-week__num {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+}
+
+/* --- text --- */
+
+.blk-text {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 1mm;
+  line-height: 1.25;
+  overflow: hidden;
+}
+
+.blk-text span {
+  width: 100%;
+}
+
+.blk-text--banner {
+  border-radius: 1.5mm;
+  background: var(--soft);
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.blk-text--outline {
+  border: 0.3mm solid var(--accent);
+  border-radius: 1.5mm;
+}
+
+/* --- habit tracker (month) --- */
+
+.blk-habits {
+  flex: 1;
+  display: grid;
+  min-height: 0;
+  margin-top: 1mm;
+  font-size: 1.8mm;
+}
+
+.blk-habits__num {
+  text-align: center;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.blk-habits__label {
+  display: flex;
+  align-items: center;
+  padding-right: 1mm;
+  border-bottom: 0.2mm solid var(--line);
+  font-size: 2.3mm;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.blk-habits__cell {
+  border-right: 0.2mm solid var(--line);
+  border-bottom: 0.2mm solid var(--line);
+}
+
+.blk-habits__cell.is-weekend {
+  background: var(--soft);
+}
+
+/* --- year in pixels --- */
+
+.blk-pixels {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 4mm repeat(12, 1fr);
+  grid-template-rows: auto repeat(31, 1fr);
+  gap: 0.3mm;
+  min-height: 0;
+  margin-top: 1mm;
+  font-size: 1.8mm;
+}
+
+.blk-pixels__month {
+  text-align: center;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.blk-pixels__day {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0.5mm;
+  color: var(--primary);
+}
+
+.blk-pixels__cell {
+  border: 0.2mm solid var(--line);
+  border-radius: 0.5mm;
+}
+
+.blk-pixels__cell.is-empty {
+  border: 0;
+  background: var(--soft);
+}
+
+/* --- month boxes (year) --- */
+
+.blk-mboxes {
+  flex: 1;
+  display: grid;
+  grid-auto-rows: 1fr;
+  gap: 2mm;
+  min-height: 0;
+  margin-top: 1.5mm;
+}
+
+.blk-mboxes__box {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border: 0.25mm solid var(--line);
+  border-radius: 1.5mm;
+  padding: 1mm 1.5mm;
+}
+
+.blk-mboxes__name {
+  font-size: 2.6mm;
+  font-weight: 700;
+  color: var(--primary);
 }

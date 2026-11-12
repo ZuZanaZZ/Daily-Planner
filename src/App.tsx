@@ -1,30 +1,23 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Page } from './components/Page';
-import { YearView, type DuplexFlip, type PrintLayout } from './components/YearView';
-import { daysInMonth, monthName } from './generator/calendar';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { YearView } from './components/YearView';
+import { Editor } from './editor/Editor';
 import { buildYear } from './generator/year';
-import { DAILY_TEMPLATE, DEFAULT_MARGINS, MONTH_TEMPLATE } from './model/defaultTemplates';
-import { MONTH_THEMES } from './model/themes';
-import type { PageContext } from './model/types';
+import { DEFAULT_MARGINS, DEFAULT_TEMPLATES } from './model/defaultTemplates';
+import { normalizeState, useStore } from './state/store';
 
 const LOCALE = 'en-GB';
-
-// Initial settings can come from the URL, e.g. ?view=year&layout=a4&year=2027
 const params = new URLSearchParams(window.location.search);
 
 export function App() {
-  const [year, setYear] = useState(Number(params.get('year')) || new Date().getFullYear() + 1);
-  const [month, setMonth] = useState(0);
-  const [day, setDay] = useState(1);
-  const [weekStart, setWeekStart] = useState<0 | 1>(params.get('weekStart') === '0' ? 0 : 1);
-  const [view, setView] = useState<'sample' | 'year'>(params.get('view') === 'year' ? 'year' : 'sample');
-  const [layout, setLayout] = useState<PrintLayout>(params.get('layout') === 'a5' ? 'a5' : 'a4');
-  const [flip, setFlip] = useState<DuplexFlip>(params.get('flip') === 'long' ? 'long' : 'short');
+  const { state, dispatch } = useStore();
+  const { year, weekStart, layout, flip } = state.settings;
+  const [view, setView] = useState<'editor' | 'year'>(params.get('view') === 'year' ? 'year' : 'editor');
   const [printing, setPrinting] = useState(false);
+  const fileInput = useRef<HTMLInputElement>(null);
 
   const pages = useMemo(
-    () => buildYear({ year, weekStart, locale: LOCALE, margins: DEFAULT_MARGINS }),
-    [year, weekStart],
+    () => buildYear({ year, weekStart, locale: LOCALE, margins: DEFAULT_MARGINS }, state.templates),
+    [year, weekStart, state.templates],
   );
 
   // Render the full year first, then open the print dialog.
@@ -34,10 +27,27 @@ export function App() {
     setPrinting(false);
   }, [printing]);
 
-  const safeDay = Math.min(day, daysInMonth(year, month));
-  const base = { year, month, weekStart, locale: LOCALE, theme: MONTH_THEMES[month] };
-  const monthCtx: PageContext = { ...base, kind: 'month-spread' };
-  const dailyCtx: PageContext = { ...base, kind: 'daily', date: new Date(year, month, safeDay) };
+  const saveDesign = () => {
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `planner-design.json`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  };
+
+  const loadDesign = async (file: File) => {
+    try {
+      const loaded = normalizeState(JSON.parse(await file.text()), {
+        templates: DEFAULT_TEMPLATES,
+        settings: state.settings,
+      });
+      // Keep the currently chosen year; designs are reusable across years.
+      dispatch({ type: 'load', state: { ...loaded, settings: { ...loaded.settings, year } } });
+    } catch {
+      alert('That file is not a planner design.');
+    }
+  };
 
   const sheetCount = Math.ceil(pages.length / 4);
   const showYear = view === 'year' || printing;
@@ -47,8 +57,8 @@ export function App() {
       <header className="toolbar no-print">
         <h1>Daily Planner</h1>
         <div className="toggle">
-          <button className={view === 'sample' ? 'is-active' : ''} onClick={() => setView('sample')}>
-            Sample pages
+          <button className={view === 'editor' ? 'is-active' : ''} onClick={() => setView('editor')}>
+            Editor
           </button>
           <button className={view === 'year' ? 'is-active' : ''} onClick={() => setView('year')}>
             Whole year
@@ -56,42 +66,28 @@ export function App() {
         </div>
         <label>
           Year
-          <input type="number" value={year} onChange={(e) => setYear(Number(e.target.value) || year)} />
+          <input
+            type="number"
+            value={year}
+            onChange={(e) => dispatch({ type: 'setSettings', settings: { year: Number(e.target.value) || year } })}
+          />
         </label>
-        {view === 'sample' && (
-          <>
-            <label>
-              Month
-              <select value={month} onChange={(e) => setMonth(Number(e.target.value))}>
-                {Array.from({ length: 12 }, (_, m) => (
-                  <option key={m} value={m}>
-                    {monthName(LOCALE, m)} — {MONTH_THEMES[m].name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Day
-              <input
-                type="number"
-                min={1}
-                max={daysInMonth(year, month)}
-                value={safeDay}
-                onChange={(e) => setDay(Number(e.target.value) || 1)}
-              />
-            </label>
-          </>
-        )}
         <label>
           Week starts
-          <select value={weekStart} onChange={(e) => setWeekStart(Number(e.target.value) as 0 | 1)}>
+          <select
+            value={weekStart}
+            onChange={(e) => dispatch({ type: 'setSettings', settings: { weekStart: Number(e.target.value) as 0 | 1 } })}
+          >
             <option value={1}>Monday</option>
             <option value={0}>Sunday</option>
           </select>
         </label>
         <label>
           Print on
-          <select value={layout} onChange={(e) => setLayout(e.target.value as PrintLayout)}>
+          <select
+            value={layout}
+            onChange={(e) => dispatch({ type: 'setSettings', settings: { layout: e.target.value as 'a4' | 'a5' } })}
+          >
             <option value="a4">A4, 2 pages per side (cut & stack)</option>
             <option value="a5">A5 paper, 1 page per side</option>
           </select>
@@ -99,13 +95,35 @@ export function App() {
         {layout === 'a4' && (
           <label>
             Duplex flip
-            <select value={flip} onChange={(e) => setFlip(e.target.value as DuplexFlip)}>
+            <select
+              value={flip}
+              onChange={(e) =>
+                dispatch({ type: 'setSettings', settings: { flip: e.target.value as 'short' | 'long' } })
+              }
+            >
               <option value="short">Short edge</option>
               <option value="long">Long edge</option>
             </select>
           </label>
         )}
         <div className="toolbar__end">
+          <button onClick={saveDesign} title="Download your page designs to reuse later">
+            Save design
+          </button>
+          <button onClick={() => fileInput.current?.click()} title="Load a saved design file">
+            Load design
+          </button>
+          <input
+            ref={fileInput}
+            type="file"
+            accept="application/json,.json"
+            hidden
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) loadDesign(f);
+              e.target.value = '';
+            }}
+          />
           <span className="toolbar__info">
             {pages.length} pages{layout === 'a4' ? ` · ${sheetCount} A4 sheets` : ''}
           </span>
@@ -115,14 +133,9 @@ export function App() {
         </div>
       </header>
 
-      {showYear ? (
-        <YearView pages={pages} margins={DEFAULT_MARGINS} layout={layout} flip={flip} />
-      ) : (
-        <main className="pages">
-          <Page template={MONTH_TEMPLATE} ctx={monthCtx} margins={DEFAULT_MARGINS} side="left" />
-          <Page template={DAILY_TEMPLATE} ctx={dailyCtx} margins={DEFAULT_MARGINS} side="right" />
-        </main>
-      )}
+      <div className="app__main">
+        {showYear ? <YearView pages={pages} margins={DEFAULT_MARGINS} layout={layout} flip={flip} /> : <Editor />}
+      </div>
 
       {layout === 'a4' && view === 'year' && (
         <aside className="help no-print">

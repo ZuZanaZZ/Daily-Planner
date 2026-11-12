@@ -3,7 +3,7 @@ import type { BlockProps } from './registry';
 
 type Style = 'lined' | 'dotted' | 'grid' | 'blank';
 
-function paperPattern(style: Style, s: number): CSSProperties {
+export function paperPattern(style: Style, s: number): CSSProperties {
   const size = `${s}mm ${s}mm`;
   switch (style) {
     case 'lined':
@@ -15,7 +15,9 @@ function paperPattern(style: Style, s: number): CSSProperties {
       return {
         backgroundImage: 'radial-gradient(circle, var(--primary) 0.3mm, transparent 0.35mm)',
         backgroundSize: size,
-        backgroundPosition: `${s / 2}mm ${s / 2}mm`,
+        // Dots sit in the middle of each tile; "round" fits a whole number of
+        // tiles into the area so no dot is cut off at the edges.
+        backgroundRepeat: 'round',
       };
     case 'grid':
       return {

@@ -7,6 +7,13 @@
     margin: 0;
   }
 
+  .app,
+  .app__main {
+    display: block;
+    height: auto;
+    overflow: visible;
+  }
+
   .no-print {
     display: none !important;
   }

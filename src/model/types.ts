@@ -8,6 +8,7 @@ export const PAGE = {
 export const GRID = {
   cols: 12,
   rowMm: 5,
+  gapMm: 2, // horizontal gap between columns
 };
 
 export interface Margins {
@@ -15,6 +16,15 @@ export interface Margins {
   bottom: number;
   inner: number; // binding side (ring holes)
   outer: number;
+}
+
+/** Number of grid rows that fit in the content area. */
+export function contentRows(m: Margins): number {
+  return Math.floor((PAGE.height - m.top - m.bottom) / GRID.rowMm);
+}
+
+export function contentWidthMm(m: Margins): number {
+  return PAGE.width - m.inner - m.outer;
 }
 
 export interface Theme {
@@ -30,7 +40,10 @@ export interface Theme {
 
 export type PageKind = 'cover' | 'year' | 'month-spread' | 'month-plan' | 'daily' | 'notes';
 
-/** A block placed on the page grid (react-grid-layout compatible coordinates). */
+/** Which palette section a block belongs to. */
+export type BlockGroup = 'daily' | 'month' | 'year' | 'general';
+
+/** A block placed on the page grid, in grid units. */
 export interface PlacedBlock {
   id: string;
   type: string; // key into the block registry
@@ -47,6 +60,10 @@ export interface PageTemplate {
   kind: PageKind;
   blocks: PlacedBlock[];
 }
+
+/** The editable page designs that make up a planner. */
+export type TemplateSlot = 'cover' | 'year' | 'monthCalendar' | 'monthPlan' | 'daily' | 'notes';
+export type TemplateSet = Record<TemplateSlot, PageTemplate>;
 
 export interface PlannerConfig {
   year: number;
