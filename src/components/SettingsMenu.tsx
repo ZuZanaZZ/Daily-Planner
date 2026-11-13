@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { DEFAULT_TEMPLATES } from '../model/defaultTemplates';
 import { normalizeState, useStore } from '../state/store';
-import { NotesFields } from './NotesFields';
 import { PlannerFields } from './PlannerFields';
 
 interface Props {
@@ -11,7 +10,7 @@ interface Props {
 /** "Settings" dropdown in the top bar, grouped into Planner / Printing / Design file. */
 export function SettingsMenu({ pageCount }: Props) {
   const { state, dispatch } = useStore();
-  const { layout, flip, year } = state.settings;
+  const { layout, flip, sides, year } = state.settings;
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const fileInput = useRef<HTMLInputElement>(null);
@@ -54,7 +53,9 @@ export function SettingsMenu({ pageCount }: Props) {
     }
   };
 
-  const sheets = Math.ceil(pageCount / 4);
+  // Pages that fit on one sheet of paper: 2 per side on A4, 1 per side on A5; doubled when double-sided.
+  const pagesPerSheet = (layout === 'a4' ? 2 : 1) * (sides === 'double' ? 2 : 1);
+  const sheets = Math.ceil(pageCount / pagesPerSheet);
 
   return (
     <div className="menu" ref={root}>
@@ -73,12 +74,6 @@ export function SettingsMenu({ pageCount }: Props) {
           </section>
 
           <section>
-            <h4>Notes pages</h4>
-            <NotesFields />
-            <p className="menu__info">The number is how many notes pages go in each spot.</p>
-          </section>
-
-          <section>
             <h4>Printing</h4>
             <div className="fields">
               <label className="field field--wide">
@@ -91,7 +86,19 @@ export function SettingsMenu({ pageCount }: Props) {
                   <option value="a5">A5 paper, 1 page per side</option>
                 </select>
               </label>
-              {layout === 'a4' && (
+              <label className="field field--wide">
+                <span>Sides</span>
+                <select
+                  value={sides}
+                  onChange={(e) =>
+                    dispatch({ type: 'setSettings', settings: { sides: e.target.value as 'double' | 'single' } })
+                  }
+                >
+                  <option value="double">Double-sided</option>
+                  <option value="single">Single-sided</option>
+                </select>
+              </label>
+              {layout === 'a4' && sides === 'double' && (
                 <label className="field field--wide">
                   <span>Duplex flip</span>
                   <select
@@ -107,7 +114,8 @@ export function SettingsMenu({ pageCount }: Props) {
               )}
             </div>
             <p className="menu__info">
-              {pageCount} A5 pages{layout === 'a4' ? ` · ${sheets} A4 sheets` : ''}
+              {pageCount} A5 pages · {sheets} {layout === 'a4' ? 'A4' : 'A5'} sheets
+              {sides === 'single' ? ' (no backs, ring margin always on the left)' : ''}
             </p>
           </section>
 

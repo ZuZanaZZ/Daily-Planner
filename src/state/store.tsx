@@ -7,6 +7,7 @@ export interface Settings {
   weekStart: 0 | 1;
   layout: 'a4' | 'a5';
   flip: 'short' | 'long';
+  sides: 'double' | 'single';
   notes: NotesSettings; // extra notes pages after days / weeks / months / at the end
 }
 
@@ -80,6 +81,7 @@ function initialState(): State {
       weekStart: 1,
       layout: 'a4',
       flip: 'short',
+      sides: 'double',
       notes: DEFAULT_NOTES,
     },
   };
@@ -96,6 +98,7 @@ function initialState(): State {
   if (params.get('weekStart')) s.weekStart = params.get('weekStart') === '0' ? 0 : 1;
   if (params.get('layout')) s.layout = params.get('layout') === 'a5' ? 'a5' : 'a4';
   if (params.get('flip')) s.flip = params.get('flip') === 'long' ? 'long' : 'short';
+  if (params.get('sides')) s.sides = params.get('sides') === 'single' ? 'single' : 'double';
   return { ...state, settings: s };
 }
 

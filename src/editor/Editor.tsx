@@ -26,7 +26,7 @@ export function Editor() {
   const template = state.templates[slot];
   const selected = template.blocks.find((b) => b.id === selectedId) ?? null;
   const rows = contentRows(DEFAULT_MARGINS);
-  const { year, weekStart } = state.settings;
+  const { year, weekStart, sides } = state.settings;
 
   const kind = template.kind;
   const ctx: PageContext = {
@@ -94,7 +94,12 @@ export function Editor() {
                   {s.label}
                 </button>
               ))}
-              {section === 'notes' && slot === 'notes' && <NotesFields />}
+              {section === 'notes' && slot === 'notes' && (
+                <>
+                  <NotesFields />
+                  <p className="ed-hint">The number is how many notes pages go in each spot.</p>
+                </>
+              )}
             </div>
           ))}
         </div>
@@ -129,7 +134,7 @@ export function Editor() {
           <EditorCanvas
             slot={slot}
             ctx={ctx}
-            side={info.side}
+            side={sides === 'single' ? 'right' : info.side}
             zoom={zoom}
             selectedId={selectedId}
             onSelect={setSelectedId}

@@ -3,6 +3,8 @@
 .page {
   position: relative;
   overflow: hidden;
+  /* Fixed-size box: the browser never has to re-check other pages when this one changes. */
+  contain: strict;
   background: var(--paper);
   color: var(--text);
   font-family: var(--font);
@@ -25,6 +27,7 @@
   width: 297mm;
   height: 210mm;
   overflow: hidden;
+  contain: strict;
   background: #fff;
 }
 

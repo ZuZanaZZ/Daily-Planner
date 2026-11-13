@@ -71,6 +71,7 @@ export interface PlannerConfig {
   locale: string;
   margins: Margins;
   notes: NotesSettings;
+  sides: 'double' | 'single';
 }
 
 /** Where extra notes pages go, and how many at each spot. */

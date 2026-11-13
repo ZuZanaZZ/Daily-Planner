@@ -8,7 +8,9 @@
   }
 
   .app,
-  .app__main {
+  .app__main,
+  .year-layout,
+  .year-main {
     display: block;
     height: auto;
     overflow: visible;
@@ -19,9 +21,11 @@
   }
 
   .pages,
-  .sheets {
+  .sheets,
+  .sheet-side {
     display: block;
     padding: 0;
+    margin: 0;
   }
 
   .pages .page,

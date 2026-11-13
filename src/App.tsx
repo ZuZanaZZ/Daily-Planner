@@ -11,17 +11,17 @@ const params = new URLSearchParams(window.location.search);
 
 export function App() {
   const { state } = useStore();
-  const { year, weekStart, layout, flip, notes } = state.settings;
+  const { year, weekStart, layout, flip, notes, sides } = state.settings;
   const [view, setView] = useState<'editor' | 'year'>(params.get('view') === 'year' ? 'year' : 'editor');
   const [printing, setPrinting] = useState(false);
 
   const pages = useMemo(
     () =>
       buildYear(
-        { year, weekStart, locale: LOCALE, margins: DEFAULT_MARGINS, notes },
+        { year, weekStart, locale: LOCALE, margins: DEFAULT_MARGINS, notes, sides },
         state.templates,
       ),
-    [year, weekStart, notes, state.templates],
+    [year, weekStart, notes, sides, state.templates],
   );
 
   // Render the full year first, then open the print dialog.
@@ -39,10 +39,10 @@ export function App() {
         <h1>Daily Planner Maker</h1>
         <div className="toggle">
           <button className={view === 'editor' ? 'is-active' : ''} onClick={() => setView('editor')}>
-            Editor
+            Edit
           </button>
           <button className={view === 'year' ? 'is-active' : ''} onClick={() => setView('year')}>
-            Whole year
+            Preview
           </button>
         </div>
         <div className="toolbar__end">
@@ -55,16 +55,67 @@ export function App() {
       </header>
 
       <div className="app__main">
-        {showYear ? <YearView pages={pages} margins={DEFAULT_MARGINS} layout={layout} flip={flip} /> : <Editor />}
+        {showYear ? (
+          <YearView
+            pages={pages}
+            margins={DEFAULT_MARGINS}
+            layout={layout}
+            flip={flip}
+            sides={sides}
+            renderAll={printing}
+          />
+        ) : (
+          <Editor />
+        )}
       </div>
 
-      {layout === 'a4' && view === 'year' && (
+      {view === 'year' && (
         <aside className="help no-print">
-          <strong>How to print:</strong> print double-sided, flip on the <b>{flip} edge</b>, scale 100% / “actual
-          size”, margins none. Keep the sheets in order, cut the whole stack in half along the marks, then put the
-          left-half stack on top of the right-half stack.
+          <button className="help__icon" aria-label="How to print" aria-describedby="print-help">
+            i
+          </button>
+          <div id="print-help" className="help__panel" role="tooltip">
+            <strong>How to print:</strong> <PrintSteps layout={layout} sides={sides} flip={flip} />
+          </div>
         </aside>
       )}
     </div>
+  );
+}
+
+/** Print instructions for the chosen paper and sides. */
+function PrintSteps(props: { layout: 'a4' | 'a5'; sides: 'double' | 'single'; flip: 'short' | 'long' }) {
+  const { layout, sides, flip } = props;
+  const common = 'scale 100% / “actual size”, margins none.';
+  const cut =
+    ' Keep the sheets in order, cut the whole stack in half along the marks, then put the left-half stack on top of the right-half stack.';
+
+  if (layout === 'a4' && sides === 'double') {
+    return (
+      <>
+        print on A4 double-sided, flip on the <b>{flip} edge</b>, {common}
+        {cut}
+      </>
+    );
+  }
+  if (layout === 'a4') {
+    return (
+      <>
+        print on A4 <b>single-sided</b>, {common}
+        {cut}
+      </>
+    );
+  }
+  if (sides === 'double') {
+    return (
+      <>
+        print on A5 paper double-sided, flip on the <b>long edge</b>, {common}
+      </>
+    );
+  }
+  return (
+    <>
+      print on A5 paper <b>single-sided</b>, {common}
+    </>
   );
 }

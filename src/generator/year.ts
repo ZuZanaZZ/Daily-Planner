@@ -42,8 +42,9 @@ export function buildYear(config: PlannerConfig, templates: TemplateSet): Planne
   push('yearPlan', 0);
 
   for (let m = 0; m < 12; m++) {
-    // A spread must start on a left-hand (odd) page so both halves face each other.
-    if (pages.length % 2 === 0) push('notes', m === 0 ? 0 : m - 1);
+    // Double-sided: a spread must start on a left-hand (odd) page so both halves
+    // face each other. Single-sided pages never face each other, so no filler.
+    if (config.sides === 'double' && pages.length % 2 === 0) push('notes', m === 0 ? 0 : m - 1);
     push('monthCalendar', m);
     push('monthPlan', m);
 
@@ -66,7 +67,11 @@ export function buildYear(config: PlannerConfig, templates: TemplateSet): Planne
   return pages;
 }
 
-/** Right-hand pages bind on the left; left-hand pages bind on the right. */
-export function sideOf(index: number): 'left' | 'right' {
+/**
+ * Right-hand pages bind on the left; left-hand pages bind on the right.
+ * Single-sided, every page is a right-hand page (rings always on the left).
+ */
+export function sideOf(index: number, sides: 'double' | 'single' = 'double'): 'left' | 'right' {
+  if (sides === 'single') return 'right';
   return index % 2 === 0 ? 'right' : 'left';
 }

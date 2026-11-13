@@ -1,4 +1,4 @@
-import type { ReactNode, Ref } from 'react';
+import { memo, type ReactNode, type Ref } from 'react';
 import { BLOCKS } from '../blocks/registry';
 import { themeVars } from '../model/themes';
 import { contentWidthMm, GRID, PAGE, type Margins, type PageContext, type PageTemplate } from '../model/types';
@@ -14,7 +14,8 @@ interface Props {
   contentRef?: Ref<HTMLDivElement>;
 }
 
-export function Page({ template, ctx, margins, side, children, contentRef }: Props) {
+/** Memoised: a page only re-renders when its own design or date changes. */
+export const Page = memo(function Page({ template, ctx, margins, side, children, contentRef }: Props) {
   const padLeft = side === 'right' ? margins.inner : margins.outer;
   const padRight = side === 'right' ? margins.outer : margins.inner;
   const width = contentWidthMm(margins);
@@ -61,4 +62,4 @@ export function Page({ template, ctx, margins, side, children, contentRef }: Pro
       </div>
     </div>
   );
-}
+});

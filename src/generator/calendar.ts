@@ -22,20 +22,52 @@ export function monthGrid(year: number, month: number, weekStart: 0 | 1): (numbe
   return weeks;
 }
 
+// Creating Intl formatters is slow and a planner renders thousands of dates,
+// so formatters and computed name lists are created once and reused.
+const formatters = new Map<string, Intl.DateTimeFormat>();
+function formatter(locale: string, options: Intl.DateTimeFormatOptions): Intl.DateTimeFormat {
+  const key = `${locale}|${JSON.stringify(options)}`;
+  let f = formatters.get(key);
+  if (!f) {
+    f = new Intl.DateTimeFormat(locale, options);
+    formatters.set(key, f);
+  }
+  return f;
+}
+
+const names = new Map<string, string[]>();
+
 /** Localized weekday names ordered from the week start. */
 export function weekdayNames(locale: string, weekStart: 0 | 1, style: 'short' | 'narrow' | 'long' = 'short'): string[] {
-  const fmt = new Intl.DateTimeFormat(locale, { weekday: style });
-  // 2023-01-01 was a Sunday.
-  return Array.from({ length: 7 }, (_, i) => fmt.format(new Date(2023, 0, 1 + ((i + weekStart) % 7))));
+  const key = `w|${locale}|${weekStart}|${style}`;
+  let list = names.get(key);
+  if (!list) {
+    const fmt = formatter(locale, { weekday: style });
+    // 2023-01-01 was a Sunday.
+    list = Array.from({ length: 7 }, (_, i) => fmt.format(new Date(2023, 0, 1 + ((i + weekStart) % 7))));
+    names.set(key, list);
+  }
+  return list;
 }
 
 export function monthName(locale: string, month: number, style: 'long' | 'short' = 'long'): string {
-  return new Intl.DateTimeFormat(locale, { month: style }).format(new Date(2023, month, 1));
+  const key = `m|${locale}|${style}`;
+  let list = names.get(key);
+  if (!list) {
+    const fmt = formatter(locale, { month: style });
+    list = Array.from({ length: 12 }, (_, m) => fmt.format(new Date(2023, m, 1)));
+    names.set(key, list);
+  }
+  return list[month];
+}
+
+export function formatDate(locale: string, date: Date, options: Intl.DateTimeFormatOptions): string {
+  return formatter(locale, options).format(date);
 }
 
 export function formatDay(locale: string, date: Date): { weekday: string; day: number; month: string } {
   return {
-    weekday: new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(date),
+    weekday: formatDate(locale, date, { weekday: 'long' }),
     day: date.getDate(),
     month: monthName(locale, date.getMonth()),
   };
