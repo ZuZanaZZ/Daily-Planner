@@ -47,6 +47,8 @@ export function EditorCanvas({ slot, ctx, side, zoom, selectedId, onSelect }: Pr
     let last: Rect = { x: block.x, y: block.y, w: block.w, h: block.h };
 
     const move = (ev: PointerEvent) => {
+      // Button was released somewhere we didn't hear about (outside the window).
+      if (ev.buttons === 0) return up();
       const dx = Math.round((ev.clientX - sx) / m.col);
       const dy = Math.round((ev.clientY - sy) / m.row);
       const next: Rect =
@@ -68,14 +70,19 @@ export function EditorCanvas({ slot, ctx, side, zoom, selectedId, onSelect }: Pr
         dispatch({ type: 'updateBlock', slot, id: block.id, patch: next });
       }
     };
-    const up = () => {
+    // Always end the drag, however it stops, so the drag cursor never gets stuck.
+    function up() {
       window.removeEventListener('pointermove', move);
       window.removeEventListener('pointerup', up);
+      window.removeEventListener('pointercancel', up);
+      window.removeEventListener('blur', up);
       document.body.classList.remove('drag-move', 'drag-resize');
-    };
+    }
     document.body.classList.add(mode === 'move' ? 'drag-move' : 'drag-resize');
     window.addEventListener('pointermove', move);
     window.addEventListener('pointerup', up);
+    window.addEventListener('pointercancel', up);
+    window.addEventListener('blur', up);
   };
 
   /** Where a palette block would land if dropped at this pointer position. */

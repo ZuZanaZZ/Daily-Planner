@@ -25,39 +25,22 @@ body {
   position: relative;
   z-index: 10;
   display: flex;
-  flex-wrap: wrap;
-  align-items: end;
+  align-items: center;
   gap: 16px;
-  padding: 12px 20px;
+  padding: 10px 20px;
   background: #fff;
   box-shadow: 0 1px 6px rgb(0 0 0 / 0.08);
+  white-space: nowrap;
 }
 
 .toolbar h1 {
-  margin: 0 12px 0 0;
+  margin: 0 8px 0 0;
   font-size: 18px;
 }
 
-.toolbar label {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 12px;
-}
-
-.toolbar input,
-.toolbar select,
 .toolbar button {
   font: inherit;
   font-size: 14px;
-  padding: 4px 8px;
-}
-
-.toolbar input[type='number'] {
-  width: 80px;
-}
-
-.toolbar button {
   border: 1px solid #d8d0e2;
   border-radius: 8px;
   padding: 7px 12px;
@@ -148,4 +131,158 @@ body {
   box-shadow: 0 2px 12px rgb(0 0 0 / 0.15);
   font-size: 13px;
   line-height: 1.45;
+}
+
+/* --- form fields (settings menu + editor sidebar) --- */
+
+.fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+
+.field {
+  display: flex;
+  flex: 1 1 90px;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 12px;
+  color: #7a7080;
+}
+
+.field--wide {
+  flex-basis: 100%;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  font: inherit;
+  font-size: 14px;
+  padding: 5px 8px;
+  border: 1px solid #d8d0e2;
+  border-radius: 6px;
+  background: #fff;
+  color: #3b3340;
+}
+
+/* --- settings dropdown --- */
+
+.menu {
+  position: relative;
+}
+
+.toolbar .menu__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toolbar .menu__button.is-open {
+  border-color: #8c74b8;
+  background: #f5f1fc;
+  color: #6c55a0;
+}
+
+.menu__button svg {
+  transition: transform 0.15s;
+}
+
+.menu__button.is-open svg {
+  transform: rotate(180deg);
+}
+
+.menu__panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 300px;
+  padding: 4px 16px;
+  border: 1px solid #e6e0ec;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 0.14);
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+  white-space: normal;
+}
+
+.menu__panel section {
+  padding: 12px 0;
+}
+
+.menu__panel section + section {
+  border-top: 1px solid #eee8f3;
+}
+
+.menu__panel h4 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #8c74b8;
+}
+
+.menu__row {
+  display: flex;
+  gap: 8px;
+}
+
+.menu__row button {
+  flex: 1;
+}
+
+.menu__info {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: #9a90a2;
+}
+
+/* --- notes pages tick boxes --- */
+
+.notes-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.notes-fields__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.notes-fields__check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #3b3340;
+  cursor: pointer;
+}
+
+.notes-fields__check input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  accent-color: #8c74b8;
+}
+
+.notes-fields__count {
+  width: 56px;
+  padding: 3px 6px;
+  border: 1px solid #d8d0e2;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 13px;
+}
+
+.notes-fields__row.is-off .notes-fields__check {
+  color: #9a90a2;
+}
+
+.notes-fields__count:disabled {
+  opacity: 0.45;
 }

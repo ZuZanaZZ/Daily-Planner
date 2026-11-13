@@ -62,7 +62,7 @@ export interface PageTemplate {
 }
 
 /** The editable page designs that make up a planner. */
-export type TemplateSlot = 'cover' | 'year' | 'monthCalendar' | 'monthPlan' | 'daily' | 'notes';
+export type TemplateSlot = 'cover' | 'year' | 'yearPlan' | 'monthCalendar' | 'monthPlan' | 'daily' | 'notes';
 export type TemplateSet = Record<TemplateSlot, PageTemplate>;
 
 export interface PlannerConfig {
@@ -70,7 +70,19 @@ export interface PlannerConfig {
   weekStart: 0 | 1;
   locale: string;
   margins: Margins;
+  notes: NotesSettings;
 }
+
+/** Where extra notes pages go, and how many at each spot. */
+export type NotesPlacement = 'day' | 'week' | 'month' | 'end';
+export type NotesSettings = Record<NotesPlacement, { enabled: boolean; count: number }>;
+
+export const DEFAULT_NOTES: NotesSettings = {
+  day: { enabled: false, count: 1 },
+  week: { enabled: false, count: 1 },
+  month: { enabled: false, count: 2 },
+  end: { enabled: false, count: 4 },
+};
 
 /** One concrete A5 page of the generated planner. */
 export interface PlannerPage {

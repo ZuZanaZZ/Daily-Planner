@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { BLOCKS } from '../blocks/registry';
 import { monthName } from '../generator/calendar';
-import { DEFAULT_MARGINS, SLOTS } from '../model/defaultTemplates';
+import { DEFAULT_MARGINS, PAGE_SECTIONS, SLOTS } from '../model/defaultTemplates';
 import { DEFAULT_THEME, MONTH_THEMES } from '../model/themes';
-import { contentRows, GRID, type BlockGroup, type PageContext, type TemplateSlot } from '../model/types';
+import { contentRows, GRID, type PageContext, type TemplateSlot } from '../model/types';
 import { newBlockId, useStore } from '../state/store';
+import { NotesFields } from '../components/NotesFields';
+import { PlannerFields } from '../components/PlannerFields';
 import { BlockPalette } from './BlockPalette';
 import { EditorCanvas } from './EditorCanvas';
 import { clamp, findFreeSpot } from './layout';
@@ -12,13 +14,6 @@ import { PropertiesPanel } from './PropertiesPanel';
 
 const LOCALE = 'en-GB';
 const SAMPLE_DAY = 14;
-
-const PAGE_GROUPS: { group: BlockGroup; label: string }[] = [
-  { group: 'year', label: 'Year' },
-  { group: 'month', label: 'Month' },
-  { group: 'daily', label: 'Daily' },
-  { group: 'general', label: 'Other' },
-];
 
 export function Editor() {
   const { state, dispatch } = useStore();
@@ -80,12 +75,14 @@ export function Editor() {
   return (
     <div className="editor">
       <aside className="ed-sidebar">
+        <h3>Planner</h3>
+        <PlannerFields />
         <h3>Pages</h3>
         <div className="ed-pages">
-          {PAGE_GROUPS.map(({ group, label }) => (
-            <div key={group} className="ed-pages__group">
+          {PAGE_SECTIONS.map(({ section, label }) => (
+            <div key={section} className="ed-pages__group">
               <span className="ed-pages__label">{label}</span>
-              {SLOTS.filter((s) => s.group === group).map((s) => (
+              {SLOTS.filter((s) => s.section === section).map((s) => (
                 <button
                   key={s.slot}
                   className={s.slot === slot ? 'is-active' : ''}
@@ -97,6 +94,7 @@ export function Editor() {
                   {s.label}
                 </button>
               ))}
+              {section === 'notes' && slot === 'notes' && <NotesFields />}
             </div>
           ))}
         </div>

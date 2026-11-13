@@ -3,14 +3,35 @@ import type { BlockGroup, Margins, PageTemplate, TemplateSet, TemplateSlot } fro
 // With the default margins the content area is 38 grid rows (5 mm each) tall.
 export const DEFAULT_MARGINS: Margins = { top: 8, bottom: 8, inner: 15, outer: 8 };
 
-/** Editor metadata for each page design. */
-export const SLOTS: { slot: TemplateSlot; label: string; group: BlockGroup; side: 'left' | 'right' }[] = [
-  { slot: 'cover', label: 'Cover', group: 'year', side: 'right' },
-  { slot: 'year', label: 'Year overview', group: 'year', side: 'left' },
-  { slot: 'monthCalendar', label: 'Month · left page', group: 'month', side: 'left' },
-  { slot: 'monthPlan', label: 'Month · right page', group: 'month', side: 'right' },
-  { slot: 'daily', label: 'Daily page', group: 'daily', side: 'right' },
-  { slot: 'notes', label: 'Notes filler', group: 'general', side: 'right' },
+/** Sections of the editor's page list. */
+export type PageSection = 'cover' | 'year' | 'month' | 'daily' | 'notes';
+
+export const PAGE_SECTIONS: { section: PageSection; label: string }[] = [
+  { section: 'cover', label: 'Cover' },
+  { section: 'year', label: 'Year' },
+  { section: 'month', label: 'Month' },
+  { section: 'daily', label: 'Daily' },
+  { section: 'notes', label: 'Notes' },
+];
+
+/**
+ * Editor metadata for each page design. `group` picks which block palette
+ * section opens first; `section` is where the page is listed.
+ */
+export const SLOTS: {
+  slot: TemplateSlot;
+  label: string;
+  section: PageSection;
+  group: BlockGroup;
+  side: 'left' | 'right';
+}[] = [
+  { slot: 'cover', label: 'Cover page', section: 'cover', group: 'general', side: 'right' },
+  { slot: 'year', label: 'Year · left page', section: 'year', group: 'year', side: 'left' },
+  { slot: 'yearPlan', label: 'Year · right page', section: 'year', group: 'year', side: 'right' },
+  { slot: 'monthCalendar', label: 'Month · left page', section: 'month', group: 'month', side: 'left' },
+  { slot: 'monthPlan', label: 'Month · right page', section: 'month', group: 'month', side: 'right' },
+  { slot: 'daily', label: 'Daily page', section: 'daily', group: 'daily', side: 'right' },
+  { slot: 'notes', label: 'Notes page', section: 'notes', group: 'general', side: 'right' },
 ];
 
 const daily: PageTemplate = {
@@ -59,13 +80,25 @@ const cover: PageTemplate = {
   blocks: [{ id: 'h', type: 'header', x: 0, y: 14, w: 12, h: 8, props: { align: 'center' } }],
 };
 
+/** Left page of the year spread. */
 const year: PageTemplate = {
   id: 'year',
-  name: 'Year overview',
+  name: 'Year · left page',
   kind: 'year',
   blocks: [
     { id: 'h', type: 'header', x: 0, y: 0, w: 12, h: 4, props: {} },
     { id: 'y', type: 'yearGrid', x: 0, y: 5, w: 12, h: 33, props: {} },
+  ],
+};
+
+/** Right page of the year spread. */
+const yearPlan: PageTemplate = {
+  id: 'yearPlan',
+  name: 'Year · right page',
+  kind: 'year',
+  blocks: [
+    { id: 'h', type: 'header', x: 0, y: 0, w: 12, h: 4, props: { align: 'right' } },
+    { id: 'm', type: 'monthBoxes', x: 0, y: 5, w: 12, h: 33, props: { title: 'Important dates' } },
   ],
 };
 
@@ -77,4 +110,4 @@ const notes: PageTemplate = {
   blocks: [{ id: 'n', type: 'notes', x: 0, y: 0, w: 12, h: 38, props: { title: 'Notes', style: 'dotted' } }],
 };
 
-export const DEFAULT_TEMPLATES: TemplateSet = { cover, year, monthCalendar, monthPlan, daily, notes };
+export const DEFAULT_TEMPLATES: TemplateSet = { cover, year, yearPlan, monthCalendar, monthPlan, daily, notes };

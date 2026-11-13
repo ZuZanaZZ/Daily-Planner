@@ -2,6 +2,7 @@ import { BLOCKS, type PropField } from '../blocks/registry';
 import { DEFAULT_MARGINS } from '../model/defaultTemplates';
 import { contentRows, GRID, type PlacedBlock, type TemplateSlot } from '../model/types';
 import { newBlockId, useStore } from '../state/store';
+import { BlockIcon } from './icons';
 import { clamp, findFreeSpot } from './layout';
 
 interface Props {
@@ -55,8 +56,9 @@ export function PropertiesPanel({ slot, block, onSelect }: Props) {
 
   return (
     <div className="ed-props">
-      <h3>
-        {def?.icon} {def?.label ?? block.type}
+      <h3 className="ed-props__title">
+        {def && <BlockIcon name={def.icon} size={20} />}
+        {def?.label ?? block.type}
       </h3>
 
       {def?.fields.map((f) => (

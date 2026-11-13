@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- planner cover -->
+  <rect x="6" y="2.5" width="22" height="27" rx="3.5" fill="#8c74b8" />
+  <!-- page header band + lines -->
+  <rect x="11" y="7" width="13" height="4" rx="1.5" fill="#f5f1fc" />
+  <path d="M11 15.5h13M11 19.5h13M11 23.5h9" stroke="#f5f1fc" stroke-width="1.8" stroke-linecap="round" />
+  <!-- binder rings -->
+  <g fill="none" stroke="#3b3340" stroke-width="2" stroke-linecap="round">
+    <path d="M4 8h5" />
+    <path d="M4 16h5" />
+    <path d="M4 24h5" />
+  </g>
+</svg>

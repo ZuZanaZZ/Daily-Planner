@@ -1,6 +1,13 @@
 import { daysInMonth } from './calendar';
 import { DEFAULT_THEME, MONTH_THEMES } from '../model/themes';
-import type { PageContext, PlannerConfig, PlannerPage, TemplateSet, TemplateSlot } from '../model/types';
+import type {
+  NotesPlacement,
+  PageContext,
+  PlannerConfig,
+  PlannerPage,
+  TemplateSet,
+  TemplateSlot,
+} from '../model/types';
 
 /**
  * Builds the ordered list of A5 pages for a whole year from the page designs.
@@ -10,6 +17,12 @@ import type { PageContext, PlannerConfig, PlannerPage, TemplateSet, TemplateSlot
  */
 export function buildYear(config: PlannerConfig, templates: TemplateSet): PlannerPage[] {
   const pages: PlannerPage[] = [];
+  /** How many notes pages go at a spot (0 when that option is unticked). */
+  const notesAt = (p: NotesPlacement) => {
+    const n = config.notes[p];
+    return n.enabled ? Math.max(0, Math.min(100, Math.floor(Number(n.count) || 0))) : 0;
+  };
+  const lastDayOfWeek = (config.weekStart + 6) % 7;
   const base = { year: config.year, weekStart: config.weekStart, locale: config.locale };
 
   const push = (slot: TemplateSlot, month: number, extra: Partial<PageContext> = {}) => {
@@ -24,7 +37,9 @@ export function buildYear(config: PlannerConfig, templates: TemplateSet): Planne
   };
 
   push('cover', 0);
+  // Year spread: cover is page 0 (right), so this lands on pages 1-2 facing each other.
   push('year', 0);
+  push('yearPlan', 0);
 
   for (let m = 0; m < 12; m++) {
     // A spread must start on a left-hand (odd) page so both halves face each other.
@@ -32,10 +47,21 @@ export function buildYear(config: PlannerConfig, templates: TemplateSet): Planne
     push('monthCalendar', m);
     push('monthPlan', m);
 
-    for (let d = 1; d <= daysInMonth(config.year, m); d++) {
-      push('daily', m, { date: new Date(config.year, m, d) });
+    const days = daysInMonth(config.year, m);
+    for (let d = 1; d <= days; d++) {
+      const date = new Date(config.year, m, d);
+      push('daily', m, { date });
+      for (let i = 0; i < notesAt('day'); i++) push('notes', m);
+
+      // A week ends on its last weekday; the final days of the year close the last week.
+      const endOfWeek = date.getDay() === lastDayOfWeek || (m === 11 && d === days);
+      if (endOfWeek) for (let i = 0; i < notesAt('week'); i++) push('notes', m);
     }
+
+    for (let i = 0; i < notesAt('month'); i++) push('notes', m);
   }
+
+  for (let i = 0; i < notesAt('end'); i++) push('notes', 11, { theme: DEFAULT_THEME });
 
   return pages;
 }

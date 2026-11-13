@@ -1,12 +1,13 @@
 import { createContext, useContext, useEffect, useReducer, type Dispatch, type ReactNode } from 'react';
 import { DEFAULT_TEMPLATES } from '../model/defaultTemplates';
-import type { PlacedBlock, TemplateSet, TemplateSlot } from '../model/types';
+import { DEFAULT_NOTES, type NotesSettings, type PlacedBlock, type TemplateSet, type TemplateSlot } from '../model/types';
 
 export interface Settings {
   year: number;
   weekStart: 0 | 1;
   layout: 'a4' | 'a5';
   flip: 'short' | 'long';
+  notes: NotesSettings; // extra notes pages after days / weeks / months / at the end
 }
 
 export interface State {
@@ -60,14 +61,27 @@ export function normalizeState(raw: unknown, fallback: State): State {
     const t = r.templates?.[slot];
     if (t && Array.isArray(t.blocks)) templates[slot] = { ...templates[slot], blocks: t.blocks };
   }
-  return { templates, settings: { ...fallback.settings, ...(r.settings ?? {}) } };
+  const settings = { ...fallback.settings, ...(r.settings ?? {}) };
+  // Merge notes options one by one so older saves (without some of them) still load.
+  const savedNotes = (r.settings?.notes ?? {}) as Partial<NotesSettings>;
+  settings.notes = { ...fallback.settings.notes };
+  for (const key of Object.keys(settings.notes) as (keyof NotesSettings)[]) {
+    settings.notes[key] = { ...settings.notes[key], ...(savedNotes[key] ?? {}) };
+  }
+  return { templates, settings };
 }
 
 function initialState(): State {
   const params = new URLSearchParams(window.location.search);
   const fallback: State = {
     templates: DEFAULT_TEMPLATES,
-    settings: { year: new Date().getFullYear() + 1, weekStart: 1, layout: 'a4', flip: 'short' },
+    settings: {
+      year: new Date().getFullYear() + 1,
+      weekStart: 1,
+      layout: 'a4',
+      flip: 'short',
+      notes: DEFAULT_NOTES,
+    },
   };
   let state = fallback;
   try {

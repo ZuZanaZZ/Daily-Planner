@@ -20,7 +20,7 @@
 }
 
 .ed-sidebar h3 {
-  margin: 8px 0 8px;
+  margin: 18px 0 8px;
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -121,7 +121,22 @@
 }
 
 .ed-palette__icon {
-  font-size: 20px;
+  display: flex;
+  color: #8c74b8;
+}
+
+.ed-palette__item:hover .ed-palette__icon {
+  color: #6c55a0;
+}
+
+.ed-props__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ed-props__title .block-icon {
+  color: #8c74b8;
 }
 
 /* --- stage --- */
@@ -232,7 +247,9 @@
 
 body.drag-move,
 body.drag-move * {
-  cursor: grabbing !important;
+  /* Open hand while dragging too: Chrome's closed "grabbing" fist on Windows
+     is a white blob with no outline that disappears on the white page. */
+  cursor: grab !important;
   user-select: none;
 }
 
@@ -318,4 +335,8 @@ body.drag-resize * {
   display: flex;
   gap: 8px;
   margin-top: 16px;
+}
+
+.ed-sidebar h3:first-child {
+  margin-top: 4px;
 }

@@ -1,11 +1,12 @@
 import { BLOCK_LIST } from '../blocks/registry';
 import type { BlockGroup } from '../model/types';
+import { BlockIcon } from './icons';
 import { paletteDrag } from './layout';
 
 const GROUP_LABEL: Record<BlockGroup, string> = {
-  daily: 'Daily blocks',
-  month: 'Month blocks',
-  year: 'Year blocks',
+  daily: 'Daily',
+  month: 'Month',
+  year: 'Year',
   general: 'General',
 };
 
@@ -41,7 +42,9 @@ export function BlockPalette({ group, onAdd }: Props) {
                 onClick={() => onAdd(d.type)}
                 title={`Add ${d.label}`}
               >
-                <span className="ed-palette__icon">{d.icon}</span>
+                <span className="ed-palette__icon">
+                  <BlockIcon name={d.icon} />
+                </span>
                 {d.label}
               </div>
             ))}

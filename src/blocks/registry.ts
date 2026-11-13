@@ -30,7 +30,7 @@ export type PropField =
 export interface BlockDef {
   type: string;
   label: string;
-  icon: string;
+  icon: string; // name of an outline icon in editor/icons.tsx
   group: BlockGroup;
   defaultSize: { w: number; h: number };
   defaultProps: Record<string, unknown>;
@@ -53,7 +53,7 @@ const defs: BlockDef[] = [
   {
     type: 'schedule',
     label: 'Hourly planner',
-    icon: '⏰',
+    icon: 'clock',
     group: 'daily',
     defaultSize: { w: 6, h: 24 },
     defaultProps: { title: 'Schedule', start: 7, end: 21, half: true, clock: '24h' },
@@ -69,7 +69,7 @@ const defs: BlockDef[] = [
   {
     type: 'priorities',
     label: 'Top priorities',
-    icon: '⭐',
+    icon: 'star',
     group: 'daily',
     defaultSize: { w: 6, h: 7 },
     defaultProps: { title: 'Top 3', count: 3 },
@@ -79,7 +79,7 @@ const defs: BlockDef[] = [
   {
     type: 'weekStrip',
     label: 'Week strip',
-    icon: '📆',
+    icon: 'week',
     group: 'daily',
     defaultSize: { w: 5, h: 4 },
     defaultProps: {},
@@ -89,7 +89,7 @@ const defs: BlockDef[] = [
   {
     type: 'water',
     label: 'Water tracker',
-    icon: '💧',
+    icon: 'droplet',
     group: 'daily',
     defaultSize: { w: 6, h: 4 },
     defaultProps: { title: 'Water', count: 8 },
@@ -99,7 +99,7 @@ const defs: BlockDef[] = [
   {
     type: 'mood',
     label: 'Mood',
-    icon: '🙂',
+    icon: 'smile',
     group: 'daily',
     defaultSize: { w: 6, h: 4 },
     defaultProps: { title: 'Mood' },
@@ -109,7 +109,7 @@ const defs: BlockDef[] = [
   {
     type: 'meals',
     label: 'Meals',
-    icon: '🍽️',
+    icon: 'utensils',
     group: 'daily',
     defaultSize: { w: 6, h: 9 },
     defaultProps: { title: 'Meals', labels: 'Breakfast, Lunch, Dinner, Snacks' },
@@ -119,7 +119,7 @@ const defs: BlockDef[] = [
   {
     type: 'gratitude',
     label: 'Gratitude',
-    icon: '💗',
+    icon: 'heart',
     group: 'daily',
     defaultSize: { w: 6, h: 6 },
     defaultProps: { title: 'Grateful for', labels: '1, 2, 3' },
@@ -129,7 +129,7 @@ const defs: BlockDef[] = [
   {
     type: 'habitsDaily',
     label: 'Habit checklist',
-    icon: '✅',
+    icon: 'checkbox',
     group: 'daily',
     defaultSize: { w: 6, h: 5 },
     defaultProps: { title: 'Habits', habits: 'Exercise, Read, Vitamins, Stretch', columns: 2 },
@@ -145,7 +145,7 @@ const defs: BlockDef[] = [
   {
     type: 'habitTracker',
     label: 'Habit tracker',
-    icon: '📊',
+    icon: 'tracker',
     group: 'month',
     defaultSize: { w: 12, h: 12 },
     defaultProps: { title: 'Habit tracker', habits: 'Exercise, Read, Water, Sleep 8h', rows: 8 },
@@ -159,7 +159,7 @@ const defs: BlockDef[] = [
   {
     type: 'weekList',
     label: 'Weekly focus',
-    icon: '🗂️',
+    icon: 'list',
     group: 'month',
     defaultSize: { w: 6, h: 16 },
     defaultProps: { title: 'Weekly focus' },
@@ -171,7 +171,7 @@ const defs: BlockDef[] = [
   {
     type: 'yearGrid',
     label: 'Year at a glance',
-    icon: '🗓️',
+    icon: 'yearGrid',
     group: 'year',
     defaultSize: { w: 12, h: 30 },
     defaultProps: {},
@@ -181,7 +181,7 @@ const defs: BlockDef[] = [
   {
     type: 'yearPixels',
     label: 'Year in pixels',
-    icon: '🟪',
+    icon: 'pixels',
     group: 'year',
     defaultSize: { w: 8, h: 32 },
     defaultProps: { title: 'Year in pixels' },
@@ -191,7 +191,7 @@ const defs: BlockDef[] = [
   {
     type: 'monthBoxes',
     label: 'Month boxes',
-    icon: '🔲',
+    icon: 'boxes',
     group: 'year',
     defaultSize: { w: 12, h: 30 },
     defaultProps: { title: 'Birthdays & events', columns: 3, style: 'lined' },
@@ -203,7 +203,7 @@ const defs: BlockDef[] = [
   {
     type: 'header',
     label: 'Date header',
-    icon: '📅',
+    icon: 'heading',
     group: 'general',
     defaultSize: { w: 12, h: 4 },
     defaultProps: { align: 'left' },
@@ -213,7 +213,7 @@ const defs: BlockDef[] = [
   {
     type: 'text',
     label: 'Text',
-    icon: '✏️',
+    icon: 'text',
     group: 'general',
     defaultSize: { w: 6, h: 2 },
     defaultProps: { text: 'Today I will…', size: 3.5, align: 'left', style: 'plain' },
@@ -228,7 +228,7 @@ const defs: BlockDef[] = [
   {
     type: 'todo',
     label: 'To-do list',
-    icon: '☑️',
+    icon: 'todo',
     group: 'general',
     defaultSize: { w: 6, h: 14 },
     defaultProps: { title: 'To do', spacing: 6, checkboxes: true },
@@ -242,7 +242,7 @@ const defs: BlockDef[] = [
   {
     type: 'notes',
     label: 'Notes',
-    icon: '🗒️',
+    icon: 'notes',
     group: 'general',
     defaultSize: { w: 6, h: 14 },
     defaultProps: { title: 'Notes', style: 'dotted', spacing: 5 },
@@ -256,7 +256,7 @@ const defs: BlockDef[] = [
   {
     type: 'calendar',
     label: 'Month calendar',
-    icon: '🗓️',
+    icon: 'calendar',
     group: 'general',
     defaultSize: { w: 5, h: 8 },
     defaultProps: { size: 'mini' },
