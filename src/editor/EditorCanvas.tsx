@@ -44,6 +44,8 @@ export function EditorCanvas({ slot, ctx, side, zoom, selectedId, onSelect }: Pr
     const m = metrics();
     const sx = e.clientX;
     const sy = e.clientY;
+    // Every update during this one drag is a single undo step.
+    const group = `${mode}-${block.id}-${Date.now()}`;
     let last: Rect = { x: block.x, y: block.y, w: block.w, h: block.h };
 
     const move = (ev: PointerEvent) => {
@@ -67,7 +69,7 @@ export function EditorCanvas({ slot, ctx, side, zoom, selectedId, onSelect }: Pr
             };
       if (next.x !== last.x || next.y !== last.y || next.w !== last.w || next.h !== last.h) {
         last = next;
-        dispatch({ type: 'updateBlock', slot, id: block.id, patch: next });
+        dispatch({ type: 'updateBlock', slot, id: block.id, patch: next, group });
       }
     };
     // Always end the drag, however it stops, so the drag cursor never gets stuck.

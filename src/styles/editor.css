@@ -340,3 +340,35 @@ body.drag-resize * {
 .ed-sidebar h3:first-child {
   margin-top: 4px;
 }
+
+/* --- undo / redo --- */
+
+.ed-history {
+  display: flex;
+  gap: 4px;
+  margin-right: 4px;
+}
+
+.ed-history__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid #d8d0e2;
+  border-radius: 8px;
+  background: #fff;
+  color: #8c74b8;
+  cursor: pointer;
+}
+
+.ed-history__btn:hover:not(:disabled) {
+  border-color: #8c74b8;
+  background: #f5f1fc;
+}
+
+.ed-history__btn:disabled {
+  color: #c9c2d0;
+  cursor: default;
+}

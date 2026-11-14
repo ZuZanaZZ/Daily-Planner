@@ -38,12 +38,19 @@ export function PropertiesPanel({ slot, block, onSelect }: Props) {
 
   const def = BLOCKS[block.type];
   const values = { ...def?.defaultProps, ...block.props };
+  // Typing in a field or dragging a slider counts as one undo step.
   const setProp = (key: string, value: unknown) =>
-    dispatch({ type: 'updateProps', slot, id: block.id, props: { [key]: value } });
+    dispatch({ type: 'updateProps', slot, id: block.id, props: { [key]: value }, group: `props-${block.id}-${key}` });
   const setGeom = (key: 'x' | 'y' | 'w' | 'h', value: number) => {
     if (!Number.isFinite(value)) return;
     const max = { x: GRID.cols - block.w, y: rows - block.h, w: GRID.cols - block.x, h: rows - block.y }[key];
-    dispatch({ type: 'updateBlock', slot, id: block.id, patch: { [key]: clamp(value, key === 'w' || key === 'h' ? 1 : 0, max) } });
+    dispatch({
+      type: 'updateBlock',
+      slot,
+      id: block.id,
+      patch: { [key]: clamp(value, key === 'w' || key === 'h' ? 1 : 0, max) },
+      group: `geom-${block.id}-${key}`,
+    });
   };
 
   const duplicate = () => {

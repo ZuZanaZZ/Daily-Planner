@@ -82,6 +82,8 @@ const ICONS: Record<string, ReactNode> = {
       <path d="M9.5 8.5h6M9.5 12h6M9.5 15.5h4M3.5 7.5h3M3.5 12h3M3.5 16.5h3" />
     </>
   ),
+  undo: <path d="M9 14.5L4.5 10 9 5.5M4.5 10h10a5 5 0 0 1 0 10H11" />,
+  redo: <path d="M15 14.5l4.5-4.5L15 5.5M19.5 10h-10a5 5 0 0 0 0 10H13" />,
   calendar: (
     <>
       <rect x="3.5" y="5" width="17" height="15.5" rx="2.5" />

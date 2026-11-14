@@ -8,6 +8,7 @@ import { newBlockId, useStore } from '../state/store';
 import { NotesFields } from '../components/NotesFields';
 import { PlannerFields } from '../components/PlannerFields';
 import { BlockPalette } from './BlockPalette';
+import { BlockIcon } from './icons';
 import { EditorCanvas } from './EditorCanvas';
 import { clamp, findFreeSpot } from './layout';
 import { PropertiesPanel } from './PropertiesPanel';
@@ -16,7 +17,7 @@ const LOCALE = 'en-GB';
 const SAMPLE_DAY = 14;
 
 export function Editor() {
-  const { state, dispatch } = useStore();
+  const { state, dispatch, canUndo, canRedo } = useStore();
   const [slot, setSlot] = useState<TemplateSlot>('daily');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [month, setMonth] = useState(0);
@@ -48,11 +49,27 @@ export function Editor() {
     setSelectedId(block.id);
   };
 
-  // Keyboard shortcuts for the selected block.
+  // Keyboard shortcuts: undo/redo, and moving/resizing/deleting the selected block.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement).tagName;
-      if (!selected || tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+      // While typing in a field, leave keys (incl. the browser's own text undo) alone.
+      if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+
+      const mod = e.ctrlKey || e.metaKey;
+      const key = e.key.toLowerCase();
+      if (mod && key === 'z') {
+        e.preventDefault();
+        dispatch({ type: e.shiftKey ? 'redo' : 'undo' });
+        return;
+      }
+      if (mod && key === 'y') {
+        e.preventDefault();
+        dispatch({ type: 'redo' });
+        return;
+      }
+
+      if (!selected) return;
       if (e.key === 'Delete' || e.key === 'Backspace') {
         dispatch({ type: 'removeBlock', slot, id: selected.id });
         setSelectedId(null);
@@ -109,6 +126,26 @@ export function Editor() {
 
       <section className="ed-stage">
         <div className="ed-stage__bar">
+          <div className="ed-history">
+            <button
+              className="ed-history__btn"
+              onClick={() => dispatch({ type: 'undo' })}
+              disabled={!canUndo}
+              title="Undo (Ctrl+Z)"
+              aria-label="Undo"
+            >
+              <BlockIcon name="undo" size={18} />
+            </button>
+            <button
+              className="ed-history__btn"
+              onClick={() => dispatch({ type: 'redo' })}
+              disabled={!canRedo}
+              title="Redo (Ctrl+Y)"
+              aria-label="Redo"
+            >
+              <BlockIcon name="redo" size={18} />
+            </button>
+          </div>
           <label>
             Preview month
             <select value={month} onChange={(e) => setMonth(Number(e.target.value))}>

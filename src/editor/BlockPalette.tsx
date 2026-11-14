@@ -25,7 +25,7 @@ export function BlockPalette({ group, onAdd }: Props) {
     <div className="ed-palette">
       <p className="ed-hint">Drag a block onto the page, or click it to add.</p>
       {order.map((g) => (
-        <details key={g} open={g === group || g === 'general'}>
+        <details key={g} open={g === group}>
           <summary>{GROUP_LABEL[g]}</summary>
           <div className="ed-palette__items">
             {BLOCK_LIST.filter((d) => d.group === g).map((d) => (
