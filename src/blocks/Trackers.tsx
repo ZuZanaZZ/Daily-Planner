@@ -1,5 +1,5 @@
 import type { BlockProps } from './registry';
-import { LuMoon } from "react-icons/lu";
+import { LuAnnoyed, LuDroplet, LuFrown, LuLaugh, LuMeh, LuMoon, LuSmile } from 'react-icons/lu';
 
 /** Splits a comma separated prop into trimmed labels. */
 export function labelList(value: unknown): string[] {
@@ -7,14 +7,6 @@ export function labelList(value: unknown): string[] {
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean);
-}
-
-function Drop() {
-  return (
-    <svg className="blk-icon" viewBox="0 0 10 14">
-      <path d="M5 0.8 C3.5 3.4 0.8 6.4 0.8 9 A4.2 4.2 0 0 0 9.2 9 C9.2 6.4 6.5 3.4 5 0.8 Z" />
-    </svg>
-  );
 }
 
 /** Water tracker: a row of droplets to colour in. */
@@ -25,14 +17,14 @@ export function Water({ props }: BlockProps<{ title: string; count: number }>) {
       {props.title && <div className="blk-title">{props.title}</div>}
       <div className="blk-icons">
         {Array.from({ length: count }, (_, i) => (
-          <Drop key={i} />
+          <LuDroplet key={i} className="blk-icon" />
         ))}
       </div>
     </div>
   );
 }
 
-/** Sleep tracker: a row of moons, colour one in per hour of sleep*/
+/** Sleep tracker: a row of moons, colour one in per hour of sleep. */
 export function Sleep({ props }: BlockProps<{ title: string; hours: number }>) {
   const hours = Math.max(1, Math.min(12, Math.round(props.hours)));
   return (
@@ -40,25 +32,15 @@ export function Sleep({ props }: BlockProps<{ title: string; hours: number }>) {
       {props.title && <div className="blk-title">{props.title}</div>}
       <div className="blk-icons">
         {Array.from({ length: hours }, (_, i) => (
-          <LuMoon key={i} className="blk-icon"/>
+          <LuMoon key={i} className="blk-icon" />
         ))}
       </div>
     </div>
-  )
-}
-
-function Face({ mood }: { mood: number }) {
-  // mood -2 (sad) .. 2 (happy) controls the mouth curve.
-  const curve = 13 + mood * 1.6;
-  return (
-    <svg className="blk-icon" viewBox="0 0 20 20">
-      <circle cx="10" cy="10" r="8.6" />
-      <circle cx="7" cy="8" r="0.9" className="fill" />
-      <circle cx="13" cy="8" r="0.9" className="fill" />
-      <path d={`M6.5 13 Q10 ${curve} 13.5 13`} />
-    </svg>
   );
 }
+
+/** Mood faces from sad to happy. */
+const FACES = [LuFrown, LuAnnoyed, LuMeh, LuSmile, LuLaugh];
 
 /** Mood: five faces from sad to happy, circle one. */
 export function Mood({ props }: BlockProps<{ title: string }>) {
@@ -66,8 +48,8 @@ export function Mood({ props }: BlockProps<{ title: string }>) {
     <div className="blk-box">
       {props.title && <div className="blk-title">{props.title}</div>}
       <div className="blk-icons blk-icons--spread">
-        {[-2, -1, 0, 1, 2].map((m) => (
-          <Face key={m} mood={m} />
+        {FACES.map((Face, i) => (
+          <Face key={i} className="blk-icon" />
         ))}
       </div>
     </div>
