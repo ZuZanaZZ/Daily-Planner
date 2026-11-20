@@ -31,6 +31,29 @@ export function Water({ props }: BlockProps<{ title: string; count: number }>) {
   );
 }
 
+function Moon() {
+  return (
+    <svg className="blk-icon" viewBox="0 0 14 14">
+      <path d="M11.5 8.5A5 5 0 0 1 5.5 2.5a5 5 0 1 0 6 6z" />
+    </svg>
+  )
+}
+
+/** Sleep tracker: a row of moons, colour one in per hour of sleep*/
+export function Sleep({ props }: BlockProps<{ title: string; hours: number }>) {
+  const hours = Math.max(1, Math.min(12, Math.round(props.hours)));
+  return (
+    <div className="blk-box">
+      {props.title && <div className="blk-title">{props.title}</div>}
+      <div className="blk-icons">
+        {Array.from({ length: hours }, (_, i) => (
+          <Moon key={i} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function Face({ mood }: { mood: number }) {
   // mood -2 (sad) .. 2 (happy) controls the mouth curve.
   const curve = 13 + mood * 1.6;

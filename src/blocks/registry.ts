@@ -7,7 +7,7 @@ import { MonthCalendar } from './MonthCalendar';
 import { YearGrid } from './YearGrid';
 import { Schedule } from './Schedule';
 import { Priorities } from './Priorities';
-import { HabitChecklist, LabeledLines, Mood, Water } from './Trackers';
+import { HabitChecklist, LabeledLines, Mood, Sleep, Water } from './Trackers';
 import { WeekStrip } from './WeekStrip';
 import { TextBlock } from './TextBlock';
 import { HabitTracker, WeekList } from './MonthBlocks';
@@ -105,6 +105,19 @@ const defs: BlockDef[] = [
     defaultProps: { title: 'Mood' },
     fields: [title()],
     Component: Mood,
+  },
+  {
+    type: 'sleep',
+    label: 'Sleep tracker',
+    icon: 'moon',
+    group: 'daily',
+    defaultSize: { w: 6, h: 4 },
+    defaultProps: { title: 'Sleep', hours: 8 },
+    fields: [
+       title(),
+       { key: 'hours', label: 'Hours', kind: 'number', min: 1, max: 12, step: 1 },
+     ],
+    Component: Sleep,
   },
   {
     type: 'meals',

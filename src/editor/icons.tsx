@@ -19,6 +19,7 @@ const ICONS: Record<string, ReactNode> = {
     </>
   ),
   droplet: <path d="M12 3.5C9 7.6 6 11 6 14.2a6 6 0 0 0 12 0C18 11 15 7.6 12 3.5z" />,
+  moon: <path d="M19 14.5A8 8 0 0 1 9.5 5a8 8 0 1 0 9.5 9.5z" />,
   smile: (
     <>
       <circle cx="12" cy="12" r="8.5" />
