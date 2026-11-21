@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { LuChevronDown } from 'react-icons/lu';
 import { DEFAULT_TEMPLATES } from '../model/defaultTemplates';
 import { normalizeState, useStore } from '../state/store';
-import { PlannerFields } from './PlannerFields';
 
 interface Props {
   pageCount: number;
@@ -67,10 +66,6 @@ export function SettingsMenu({ pageCount }: Props) {
 
       {open && (
         <div className="menu__panel">
-          <section>
-            <h4>Planner</h4>
-            <PlannerFields />
-          </section>
 
           <section>
             <h4>Printing</h4>

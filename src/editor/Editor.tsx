@@ -151,7 +151,7 @@ export function Editor() {
             <select value={month} onChange={(e) => setMonth(Number(e.target.value))}>
               {Array.from({ length: 12 }, (_, m) => (
                 <option key={m} value={m}>
-                  {monthName(LOCALE, m)} — {MONTH_THEMES[m].name}
+                  {monthName(LOCALE, m)}
                 </option>
               ))}
             </select>

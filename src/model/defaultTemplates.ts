@@ -25,13 +25,13 @@ export const SLOTS: {
   group: BlockGroup;
   side: 'left' | 'right';
 }[] = [
-  { slot: 'cover', label: 'Cover page', section: 'cover', group: 'general', side: 'right' },
-  { slot: 'year', label: 'Year · left page', section: 'year', group: 'year', side: 'left' },
-  { slot: 'yearPlan', label: 'Year · right page', section: 'year', group: 'year', side: 'right' },
-  { slot: 'monthCalendar', label: 'Month · left page', section: 'month', group: 'month', side: 'left' },
-  { slot: 'monthPlan', label: 'Month · right page', section: 'month', group: 'month', side: 'right' },
-  { slot: 'daily', label: 'Daily page', section: 'daily', group: 'daily', side: 'right' },
-  { slot: 'notes', label: 'Notes page', section: 'notes', group: 'general', side: 'right' },
+  { slot: 'cover', label: 'Cover', section: 'cover', group: 'general', side: 'right' },
+  { slot: 'year', label: 'Year left', section: 'year', group: 'year', side: 'left' },
+  { slot: 'yearPlan', label: 'Year right', section: 'year', group: 'year', side: 'right' },
+  { slot: 'monthCalendar', label: 'Month left', section: 'month', group: 'month', side: 'left' },
+  { slot: 'monthPlan', label: 'Month right', section: 'month', group: 'month', side: 'right' },
+  { slot: 'daily', label: 'Daily', section: 'daily', group: 'daily', side: 'right' },
+  { slot: 'notes', label: 'Notes', section: 'notes', group: 'general', side: 'right' },
 ];
 
 const daily: PageTemplate = {
