@@ -161,6 +161,10 @@
   gap: 6px;
 }
 
+.ed-stage__bar select {
+    width: 120px;
+}
+
 /* Customisable select (Chrome 135+): the popup list becomes stylable HTML.
    Older browsers ignore these rules and show the native dropdown. */
 select,

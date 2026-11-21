@@ -192,6 +192,7 @@ body {
 .field {
   display: flex;
   flex: 1 1 90px;
+  min-width: 0;
   flex-direction: column;
   gap: 3px;
   font-size: 12px;
