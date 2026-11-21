@@ -210,9 +210,9 @@ body {
   width: auto;
   font: inherit;
   font-size: 14px;
-  padding: 5px 8px;
+  padding: 7px 12px;
   border: 1px solid #d8d0e2;
-  border-radius: 6px;
+  border-radius: 8px;
   background: #fff;
   color: #3b3340;
 }
