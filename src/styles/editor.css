@@ -161,6 +161,47 @@
   gap: 6px;
 }
 
+/* Customisable select (Chrome 135+): the popup list becomes stylable HTML.
+   Older browsers ignore these rules and show the native dropdown. */
+select,
+select::picker(select) {
+  appearance: base-select;
+}
+
+select::picker(select) {
+  padding: 4px;
+  border: 1px solid #d8d0e2;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.12);
+}
+
+select option {
+  padding: 5px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+select option:hover,
+select option:checked {
+  background: #f5f1fc;
+  color: #6c55a0;
+}
+
+select option:checked,
+select option:focus-visible {
+     outline: 2px solid #8c74b8;
+     outline-offset: -2px;
+}
+
+select option::checkmark {
+  display: none;
+}
+
+select::picker-icon {
+  color: #8c74b8;
+}
+
 .ed-stage__scroll {
   flex: 1;
   overflow: auto;

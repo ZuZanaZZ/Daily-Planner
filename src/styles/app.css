@@ -203,8 +203,11 @@ body {
 }
 
 .field input,
-.field select {
-  width: 100%;
+.field select,
+.ed-field select,
+.ed-field input[type='text'],
+.ed-stage__bar select{
+  width: auto;
   font: inherit;
   font-size: 14px;
   padding: 5px 8px;
@@ -212,6 +215,14 @@ body {
   border-radius: 6px;
   background: #fff;
   color: #3b3340;
+}
+
+.field select:focus,
+.ed-field select:focus,
+.ed-field input[type='text']:focus,
+.ed-stage__bar select:focus{
+    outline: none;
+    border-color: #8c74b8;
 }
 
 /* --- settings dropdown --- */
