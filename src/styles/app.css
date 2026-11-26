@@ -207,6 +207,7 @@ body {
 .field select,
 .ed-field select,
 .ed-field input[type='text'],
+.ed-palette input[type='text'],
 .ed-stage__bar select{
   width: auto;
   font: inherit;
@@ -218,9 +219,19 @@ body {
   color: #3b3340;
 }
 
+.ed-palette input[type='text']{
+      width: 100%;
+      margin-bottom: 10px;
+}
+
+.ed-palette input::placeholder{
+    color: #9a90a2;
+}
+
 .field select:focus,
 .ed-field select:focus,
 .ed-field input[type='text']:focus,
+.ed-palette input[type='text']:focus,
 .ed-stage__bar select:focus{
     outline: none;
     border-color: #8c74b8;

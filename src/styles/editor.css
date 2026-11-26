@@ -12,6 +12,7 @@
   padding: 12px 14px 24px;
   background: #fff;
   border-right: 1px solid #e6e0ec;
+   scrollbar-gutter: stable;
 }
 
 .ed-sidebar--right {
@@ -356,7 +357,8 @@ body.drag-resize * {
 }
 
 .ed-field input[type='text'],
-.ed-field select {
+.ed-field select,
+.ed-palette input[type='text']{
   font: inherit;
   padding: 5px 8px;
   border: 1px solid #d8d0e2;
