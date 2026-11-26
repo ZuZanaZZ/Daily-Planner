@@ -8,8 +8,8 @@ export type PageSection = 'cover' | 'year' | 'month' | 'weekly' | 'daily' | 'not
 
 export const PAGE_SECTIONS: { section: PageSection; label: string }[] = [
   { section: 'cover', label: 'Cover' },
-  { section: 'year', label: 'Year' },
-  { section: 'month', label: 'Month' },
+  { section: 'year', label: 'Yearly' },
+  { section: 'month', label: 'Monthly' },
   { section: 'weekly', label: 'Weekly'},
   { section: 'daily', label: 'Daily' },
   { section: 'notes', label: 'Notes' },
@@ -27,10 +27,10 @@ export const SLOTS: {
   side: 'left' | 'right';
 }[] = [
   { slot: 'cover', label: 'Cover', section: 'cover', group: 'general', side: 'right' },
-  { slot: 'year', label: 'Year left', section: 'year', group: 'year', side: 'left' },
-  { slot: 'yearPlan', label: 'Year right', section: 'year', group: 'year', side: 'right' },
-  { slot: 'monthCalendar', label: 'Month left', section: 'month', group: 'month', side: 'left' },
-  { slot: 'monthPlan', label: 'Month right', section: 'month', group: 'month', side: 'right' },
+  { slot: 'year', label: 'Yearly left', section: 'year', group: 'year', side: 'left' },
+  { slot: 'yearPlan', label: 'Yearly right', section: 'year', group: 'year', side: 'right' },
+  { slot: 'monthCalendar', label: 'Monthly left', section: 'month', group: 'month', side: 'left' },
+  { slot: 'monthPlan', label: 'Monthly right', section: 'month', group: 'month', side: 'right' },
   { slot: 'weekly', label: 'Weekly', section: 'weekly', group: 'general', side: 'right' },
   { slot: 'daily', label: 'Daily', section: 'daily', group: 'daily', side: 'right' },
   { slot: 'notes', label: 'Notes', section: 'notes', group: 'general', side: 'right' },
@@ -41,11 +41,11 @@ const daily: PageTemplate = {
   name: 'Daily',
   kind: 'daily',
   blocks: [
-    { id: 'h', type: 'header', x: 0, y: 0, w: 7, h: 5, props: {} },
-    { id: 'w', type: 'weekStrip', x: 7, y: 0, w: 5, h: 5, props: {} },
-    { id: 's', type: 'schedule', x: 0, y: 6, w: 6, h: 28, props: {} },
-    { id: 'p', type: 'priorities', x: 6, y: 6, w: 6, h: 7, props: {} },
-    { id: 't', type: 'todo', x: 6, y: 13, w: 6, h: 13, props: {} },
+    { id: 'h', type: 'header', x: 0, y: 0, w: 7, h: 4, props: {} },
+    { id: 'w', type: 'weekStrip', x: 7, y: 0, w: 5, h: 4, props: {} },
+    { id: 's', type: 'schedule', x: 0, y: 5, w: 6, h: 29, props: {} },
+    { id: 'p', type: 'priorities', x: 6, y: 5, w: 6, h: 7, props: {} },
+    { id: 't', type: 'todo', x: 6, y: 12, w: 6, h: 14, props: {} },
     { id: 'wa', type: 'water', x: 6, y: 26, w: 6, h: 4, props: {} },
     { id: 'm', type: 'mood', x: 6, y: 30, w: 6, h: 4, props: {} },
     { id: 'n', type: 'notes', x: 0, y: 34, w: 12, h: 4, props: { title: 'Notes', style: 'lined', spacing: 6 } },
@@ -69,7 +69,7 @@ const weekly: PageTemplate = {
 
 const monthCalendar: PageTemplate = {
   id: 'monthCalendar',
-  name: 'Month · left page',
+  name: 'Monthly · left page',
   kind: 'month-spread',
   blocks: [
     { id: 'h', type: 'header', x: 0, y: 0, w: 12, h: 4, props: {} },
@@ -80,7 +80,7 @@ const monthCalendar: PageTemplate = {
 
 const monthPlan: PageTemplate = {
   id: 'monthPlan',
-  name: 'Month · right page',
+  name: 'Monthly · right page',
   kind: 'month-plan',
   blocks: [
     { id: 'h', type: 'header', x: 0, y: 0, w: 12, h: 4, props: { align: 'right' } },
@@ -100,7 +100,7 @@ const cover: PageTemplate = {
 /** Left page of the year spread. */
 const year: PageTemplate = {
   id: 'year',
-  name: 'Year · left page',
+  name: 'Yearly · left page',
   kind: 'year',
   blocks: [
     { id: 'h', type: 'header', x: 0, y: 0, w: 12, h: 4, props: {} },
@@ -111,7 +111,7 @@ const year: PageTemplate = {
 /** Right page of the year spread. */
 const yearPlan: PageTemplate = {
   id: 'yearPlan',
-  name: 'Year · right page',
+  name: 'Yearly · right page',
   kind: 'year',
   blocks: [
     { id: 'h', type: 'header', x: 0, y: 0, w: 12, h: 4, props: { align: 'right' } },
