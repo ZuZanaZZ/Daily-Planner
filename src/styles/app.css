@@ -2,11 +2,19 @@
   box-sizing: border-box;
 }
 
+/* Form controls use the browser's own text colour (black) unless told to inherit. */
+button,
+input,
+select,
+textarea {
+  color: inherit;
+}
+
 body {
   margin: 0;
-  background: #ece8ef;
-  font-family: system-ui, sans-serif;
-  color: #3b3340;
+  background: var(--ui-bg);
+  font-family: var(--ui-font);
+  color: var(--ui-text);
 }
 
 .app {
@@ -28,31 +36,31 @@ body {
   align-items: center;
   gap: 16px;
   padding: 10px 20px;
-  background: #fff;
+  background: var(--ui-surface);
   box-shadow: 0 1px 6px rgb(0 0 0 / 0.08);
   white-space: nowrap;
 }
 
 .toolbar h1 {
   margin: 0 8px 0 0;
-  font-size: 18px;
+  font-size: var(--ui-text-lg);
 }
 
 .toolbar button {
   font: inherit;
-  font-size: 14px;
-  border: 1px solid #d8d0e2;
-  border-radius: 8px;
+  font-size: var(--ui-text-md);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
   padding: 7px 12px;
-  background: #fff;
+  background: var(--ui-surface);
   color: inherit;
   cursor: pointer;
 }
 
 .toolbar button.primary {
-  border-color: #8c74b8;
-  background: #8c74b8;
-  color: #fff;
+  border-color: var(--ui-primary);
+  background: var(--ui-primary);
+  color: var(--ui-on-primary);
 }
 
 .toggle {
@@ -60,17 +68,17 @@ body {
 }
 
 .toggle button:first-child {
-  border-radius: 8px 0 0 8px;
+  border-radius: var(--ui-radius) 0 0 var(--ui-radius);
 }
 
 .toggle button:last-child {
   border-left: 0;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 var(--ui-radius) var(--ui-radius) 0;
 }
 
 .toggle button.is-active {
-  background: #f5f1fc;
-  color: #8c74b8;
+  background: var(--ui-primary-soft);
+  color: var(--ui-primary);
   font-weight: 600;
 }
 
@@ -82,8 +90,8 @@ body {
 }
 
 .toolbar__info {
-  font-size: 13px;
-  color: #7a7080;
+  font-size: var(--ui-text-md);
+  color: var(--ui-muted);
 }
 
 .pages {
@@ -116,8 +124,8 @@ body {
 }
 
 .sheet-label {
-  font-size: 13px;
-  color: #7a7080;
+  font-size: var(--ui-text-md);
+  color: var(--ui-muted);
 }
 
 /* Print instructions: a small "i" in the corner, the text shows on hover / focus. */
@@ -131,10 +139,10 @@ body {
 .help__icon {
   width: 32px;
   height: 32px;
-  border: 1.5px solid #8c74b8;
+  border: 1.5px solid var(--ui-primary);
   border-radius: 50%;
-  background: #fff;
-  color: #8c74b8;
+  background: var(--ui-surface);
+  color: var(--ui-primary);
   font: italic 700 16px/1 Georgia, serif;
   cursor: help;
   box-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
@@ -142,8 +150,8 @@ body {
 
 .help:hover .help__icon,
 .help__icon:focus-visible {
-  background: #8c74b8;
-  color: #fff;
+  background: var(--ui-primary);
+  color: var(--ui-on-primary);
   outline: none;
 }
 
@@ -154,10 +162,10 @@ body {
   bottom: calc(100% + 10px);
   width: 320px;
   padding: 12px 14px;
-  border-radius: 10px;
-  background: #fff;
+  border-radius: var(--ui-radius-lg);
+  background: var(--ui-surface);
   box-shadow: 0 4px 18px rgb(0 0 0 / 0.18);
-  font-size: 13px;
+  font-size: var(--ui-text-md);
   line-height: 1.45;
   /* origin = centre of the "i" button below the panel */
   transform-origin: calc(100% - 16px) calc(100% + 26px);
@@ -195,8 +203,8 @@ body {
   min-width: 0;
   flex-direction: column;
   gap: 3px;
-  font-size: 12px;
-  color: #7a7080;
+  font-size: var(--ui-text-sm);
+  color: var(--ui-muted);
 }
 
 .field--wide {
@@ -211,12 +219,12 @@ body {
 .ed-stage__bar select{
   width: auto;
   font: inherit;
-  font-size: 14px;
+  font-size: var(--ui-text-md);
   padding: 7px 12px;
-  border: 1px solid #d8d0e2;
-  border-radius: 8px;
-  background: #fff;
-  color: #3b3340;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-surface);
+  color: var(--ui-text);
 }
 
 .ed-palette input[type='text']{
@@ -225,16 +233,17 @@ body {
 }
 
 .ed-palette input::placeholder{
-    color: #9a90a2;
+    color: var(--ui-faint);
 }
 
 .field select:focus,
 .ed-field select:focus,
 .ed-field input[type='text']:focus,
 .ed-palette input[type='text']:focus,
+.ed-palette summary:focus,
 .ed-stage__bar select:focus{
     outline: none;
-    border-color: #8c74b8;
+    border-color: var(--ui-primary);
 }
 
 /* --- settings dropdown --- */
@@ -250,9 +259,9 @@ body {
 }
 
 .toolbar .menu__button.is-open {
-  border-color: #8c74b8;
-  background: #f5f1fc;
-  color: #6c55a0;
+  border-color: var(--ui-primary);
+  background: var(--ui-primary-soft);
+  color: var(--ui-primary-dark);
 }
 
 .menu__button svg {
@@ -269,9 +278,9 @@ body {
   right: 0;
   width: 300px;
   padding: 4px 16px;
-  border: 1px solid #e6e0ec;
-  border-radius: 12px;
-  background: #fff;
+  border: 1px solid var(--ui-border-soft);
+  border-radius: var(--ui-radius-lg);
+  background: var(--ui-surface);
   box-shadow: 0 8px 28px rgb(0 0 0 / 0.14);
   max-height: calc(100vh - 80px);
   overflow-y: auto;
@@ -283,15 +292,15 @@ body {
 }
 
 .menu__panel section + section {
-  border-top: 1px solid #eee8f3;
+  border-top: 1px solid var(--ui-border-soft);
 }
 
 .menu__panel h4 {
   margin: 0 0 8px;
-  font-size: 12px;
+  font-size: var(--ui-text-sm);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #8c74b8;
+  color: var(--ui-primary);
 }
 
 .menu__row {
@@ -305,8 +314,8 @@ body {
 
 .menu__info {
   margin: 8px 0 0;
-  font-size: 12px;
-  color: #9a90a2;
+  font-size: var(--ui-text-sm);
+  color: var(--ui-faint);
 }
 
 /* --- notes pages tick boxes --- */
@@ -329,8 +338,8 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
-  color: #3b3340;
+  font-size: var(--ui-text-md);
+  color: var(--ui-text);
   cursor: pointer;
 }
 
@@ -338,20 +347,20 @@ body {
   width: 15px;
   height: 15px;
   margin: 0;
-  accent-color: #8c74b8;
+  accent-color: var(--ui-primary);
 }
 
 .notes-fields__count {
   width: 56px;
   padding: 3px 6px;
-  border: 1px solid #d8d0e2;
-  border-radius: 6px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
   font: inherit;
-  font-size: 13px;
+  font-size: var(--ui-text-md);
 }
 
 .notes-fields__row.is-off .notes-fields__check {
-  color: #9a90a2;
+  color: var(--ui-faint);
 }
 
 .notes-fields__count:disabled {
@@ -369,7 +378,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: var(--ui-radius-sm);
   background: rgb(140 116 184 / 0.28);
   pointer-events: none;
 }
@@ -406,10 +415,10 @@ body {
 
 .flip-edge__label {
   padding: 2px 6px;
-  border-radius: 999px;
-  background: #fff;
-  color: #8c74b8;
-  font-size: 11px;
+  border-radius: var(--ui-radius-pill);
+  background: var(--ui-surface);
+  color: var(--ui-primary);
+  font-size: var(--ui-text-sm);
   font-weight: 600;
   white-space: nowrap;
   box-shadow: 0 0 0 1px rgb(140 116 184 / 0.35);
@@ -458,48 +467,48 @@ body {
   align-items: center;
   gap: 3px;
   padding: 5px;
-  border: 1px solid #ebe5f1;
-  border-radius: 10px;
-  background: #fbf9fd;
+  border: 1px solid var(--ui-border-soft);
+  border-radius: var(--ui-radius-lg);
+  background: var(--ui-surface-alt);
   font: inherit;
   color: inherit;
   cursor: pointer;
 }
 
 .year-nav__item:hover {
-  border-color: #c7b5e6;
-  background: #f5f1fc;
+  border-color: var(--ui-primary-light);
+  background: var(--ui-primary-soft);
 }
 
 .year-nav__item.is-active {
-  border-color: #8c74b8;
-  background: #f5f1fc;
-  box-shadow: 0 0 0 1px #8c74b8;
+  border-color: var(--ui-primary);
+  background: var(--ui-primary-soft);
+  box-shadow: 0 0 0 1px var(--ui-primary);
 }
 
 .thumb {
   overflow: hidden;
   contain: strict;
-  border-radius: 3px;
-  background: #fff;
+  border-radius: var(--ui-radius-sm);
+  background: var(--ui-surface);
   box-shadow: 0 1px 4px rgb(0 0 0 / 0.12);
   pointer-events: none;
 }
 
 .year-nav__label {
-  font-size: 12px;
+  font-size: var(--ui-text-sm);
   font-weight: 600;
 }
 
 .year-nav__item.is-active .year-nav__label {
-  color: #6c55a0;
+  color: var(--ui-primary-dark);
 }
 
 .year-nav__sub {
   max-width: 100%;
   overflow: hidden;
-  font-size: 11px;
-  color: #9a90a2;
+  font-size: var(--ui-text-sm);
+  color: var(--ui-faint);
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -512,7 +521,7 @@ body {
 /* --- lazy-loaded preview pages --- */
 
 .lazy__placeholder {
-  background: #fff;
+  background: var(--ui-surface);
   opacity: 0.6;
   box-shadow: 0 2px 12px rgb(0 0 0 / 0.06);
 }

@@ -1,0 +1,40 @@
+/* Shared design values for the app UI (not the planner pages: those use the
+   monthly theme variables in page.css). Use them as var(--ui-name). */
+
+:root {
+  /* colours */
+  --ui-primary: #8c74b8; /* accent: focus borders, icons, headings */
+  --ui-primary-dark: #6c55a0; /* text on a lilac fill */
+  --ui-primary-soft: #f5f1fc; /* active / hover fills */
+  --ui-primary-light: #c7b5e6; /* hover borders */
+  --ui-border: #d8d0e2; /* button and input borders */
+  --ui-border-soft: #e6e0ec; /* dividers, sidebar edges */
+  --ui-text: #4d4658; /* normal text: a soft dark grey, easier on the eyes than near-black */
+  --ui-muted: #7a7080; /* hints and labels */
+  --ui-faint: #9a90a2; /* placeholders, small labels */
+  --ui-disabled: #c9c2d0; /* disabled controls */
+  --ui-on-primary: #fff; /* text and rings drawn on top of the accent colour */
+  --ui-surface: #fff; /* white panels and buttons */
+  --ui-surface-alt: #fbf9fd; /* palette items */
+  --ui-bg: #ece8ef; /* app background */
+  --ui-danger: #b04a62; /* delete / reset text */
+  --ui-danger-border: #e6b8c2; /* delete / reset border */
+  --ui-overlap: #e0627e; /* red outline for overlapping blocks */
+
+  /* text sizes: small, base, large */
+  --ui-text-sm: 12px;
+  --ui-text-md: 14px;
+  --ui-text-lg: 18px;
+
+  /* corners */
+  --ui-radius-sm: 4px; /* small chips and checkboxes */
+  --ui-radius: 8px; /* buttons, inputs, dropdowns */
+  --ui-radius-lg: 12px; /* panels and cards */
+  --ui-radius-pill: 999px; /* fully rounded ends */
+
+  /* the dropdown arrow (Lucide chevron-down), drawn with mask: so it takes any colour */
+  --ui-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+  /* typeface */
+  --ui-font: system-ui, sans-serif;
+}

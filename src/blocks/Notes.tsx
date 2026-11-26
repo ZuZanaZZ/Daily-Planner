@@ -8,12 +8,12 @@ export function paperPattern(style: Style, s: number): CSSProperties {
   switch (style) {
     case 'lined':
       return {
-        backgroundImage: `linear-gradient(to bottom, transparent calc(${s}mm - 0.25mm), var(--line) calc(${s}mm - 0.25mm))`,
+        backgroundImage: `linear-gradient(to bottom, transparent calc(${s}mm - 0.25mm), var(--page-line) calc(${s}mm - 0.25mm))`,
         backgroundSize: `100% ${s}mm`,
       };
     case 'dotted':
       return {
-        backgroundImage: 'radial-gradient(circle, var(--primary) 0.3mm, transparent 0.35mm)',
+        backgroundImage: 'radial-gradient(circle, var(--page-primary) 0.3mm, transparent 0.35mm)',
         backgroundSize: size,
         // Dots sit in the middle of each tile; "round" fits a whole number of
         // tiles into the area so no dot is cut off at the edges.
@@ -22,7 +22,7 @@ export function paperPattern(style: Style, s: number): CSSProperties {
     case 'grid':
       return {
         backgroundImage:
-          'linear-gradient(to right, var(--line) 0.2mm, transparent 0.2mm), linear-gradient(to bottom, var(--line) 0.2mm, transparent 0.2mm)',
+          'linear-gradient(to right, var(--page-line) 0.2mm, transparent 0.2mm), linear-gradient(to bottom, var(--page-line) 0.2mm, transparent 0.2mm)',
         backgroundSize: size,
       };
     default:

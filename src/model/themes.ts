@@ -35,12 +35,12 @@ export const DEFAULT_THEME: Theme = {
 
 export function themeVars(t: Theme): CSSProperties {
   return {
-    '--primary': t.primary,
-    '--accent': t.accent,
-    '--soft': t.soft,
-    '--line': t.line,
-    '--text': t.text,
-    '--paper': t.paper,
-    '--font': t.font,
+    '--page-primary': t.primary,
+    '--page-accent': t.accent,
+    '--page-soft': t.soft,
+    '--page-line': t.line,
+    '--page-text': t.text,
+    '--page-paper': t.paper,
+    '--page-font': t.font,
   } as CSSProperties;
 }

@@ -5,9 +5,9 @@
   overflow: hidden;
   /* Fixed-size box: the browser never has to re-check other pages when this one changes. */
   contain: strict;
-  background: var(--paper);
-  color: var(--text);
-  font-family: var(--font);
+  background: var(--page-paper);
+  color: var(--page-text);
+  font-family: var(--page-font);
   font-size: 3mm;
 }
 
@@ -76,8 +76,8 @@
   line-height: 6mm;
   padding: 0 2mm;
   border-radius: 1.5mm;
-  background: var(--soft);
-  color: var(--primary);
+  background: var(--page-soft);
+  color: var(--page-primary);
   font-weight: 700;
   font-size: 3.2mm;
   letter-spacing: 0.2mm;
@@ -91,7 +91,7 @@
   display: flex;
   align-items: center;
   gap: 3mm;
-  border-bottom: 0.5mm solid var(--accent);
+  border-bottom: 0.5mm solid var(--page-accent);
 }
 
 .blk-header--center {
@@ -106,13 +106,13 @@
   font-size: 16mm;
   font-weight: 800;
   line-height: 1;
-  color: var(--primary);
+  color: var(--page-primary);
 }
 
 .blk-header__title {
   font-size: 9mm;
   font-weight: 800;
-  color: var(--primary);
+  color: var(--page-primary);
 }
 
 .blk-header__sub {
@@ -130,7 +130,7 @@
   font-size: 6mm;
   letter-spacing: 1.5mm;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--page-accent);
 }
 
 .blk-header--cover .blk-header__big {
@@ -153,14 +153,14 @@
   flex: none;
   display: flex;
   align-items: center;
-  border-bottom: 0.2mm solid var(--line);
+  border-bottom: 0.2mm solid var(--page-line);
 }
 
 .blk-todo__check {
   width: 3mm;
   height: 3mm;
   margin-left: 1mm;
-  border: 0.3mm solid var(--accent);
+  border: 0.3mm solid var(--page-accent);
   border-radius: 0.8mm;
 }
 
@@ -188,7 +188,7 @@
 .blk-cal__dow {
   text-align: center;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--page-primary);
 }
 
 .blk-cal--mini {
@@ -210,26 +210,26 @@
 
 .blk-cal--mini .blk-cal__day.is-today {
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--page-accent);
   color: #fff;
   font-weight: 700;
 }
 
 .blk-cal--large .blk-cal__dow {
   padding: 1mm 0;
-  background: var(--soft);
+  background: var(--page-soft);
 }
 
 .blk-cal--large .blk-cal__day {
   padding: 0.8mm 1mm;
-  border-right: 0.2mm solid var(--line);
-  border-bottom: 0.2mm solid var(--line);
+  border-right: 0.2mm solid var(--page-line);
+  border-bottom: 0.2mm solid var(--page-line);
   font-weight: 700;
-  color: var(--primary);
+  color: var(--page-primary);
 }
 
 .blk-cal--large .blk-cal__day:nth-child(7n + 1) {
-  border-left: 0.2mm solid var(--line);
+  border-left: 0.2mm solid var(--page-line);
 }
 
 .blk-cal--mini .blk-cal__day.is-empty {
@@ -237,7 +237,7 @@
 }
 
 .blk-cal--large .blk-cal__day.is-empty {
-  background: var(--soft);
+  background: var(--page-soft);
   opacity: 0.6;
 }
 
@@ -256,7 +256,7 @@
   align-items: flex-end;
   gap: 1.5mm;
   padding-bottom: 0.6mm;
-  border-bottom: 0.2mm solid var(--line);
+  border-bottom: 0.2mm solid var(--page-line);
 }
 
 .blk-line-row--top {
@@ -267,7 +267,7 @@
 .blk-label {
   font-size: 2.6mm;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--page-primary);
 }
 
 /* --- hourly planner --- */
@@ -277,7 +277,7 @@
   flex: 1;
   display: flex;
   align-items: flex-start;
-  border-bottom: 0.2mm solid var(--line);
+  border-bottom: 0.2mm solid var(--page-line);
 }
 
 .blk-sched__hour {
@@ -285,7 +285,7 @@
   padding-top: 0.4mm;
   font-size: 2.5mm;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--page-primary);
 }
 
 .blk-sched__half {
@@ -293,7 +293,7 @@
   top: 50%;
   left: 7mm;
   right: 0;
-  border-top: 0.2mm dashed var(--line);
+  border-top: 0.2mm dashed var(--page-line);
 }
 
 /* --- priorities --- */
@@ -305,7 +305,7 @@
   width: 3.6mm;
   height: 3.6mm;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--page-accent);
   color: #fff;
   font-size: 2.3mm;
   font-weight: 800;
@@ -332,7 +332,7 @@
   width: auto;
   flex: 0 1 auto;
   fill: none;
-  stroke: var(--primary);
+  stroke: var(--page-primary);
   stroke-width: 2;
   stroke-linecap: round;
 }
@@ -379,7 +379,7 @@
 .blk-week__name {
   font-size: 2.3mm;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--page-primary);
 }
 
 .blk-week__num {
@@ -393,7 +393,7 @@
 }
 
 .blk-week__day.is-today .blk-week__num {
-  background: var(--accent);
+  background: var(--page-accent);
   color: #fff;
   font-weight: 800;
 }
@@ -415,13 +415,13 @@
 
 .blk-text--banner {
   border-radius: 1.5mm;
-  background: var(--soft);
-  color: var(--primary);
+  background: var(--page-soft);
+  color: var(--page-primary);
   font-weight: 700;
 }
 
 .blk-text--outline {
-  border: 0.3mm solid var(--accent);
+  border: 0.3mm solid var(--page-accent);
   border-radius: 1.5mm;
 }
 
@@ -437,7 +437,7 @@
 
 .blk-habits__num {
   text-align: center;
-  color: var(--primary);
+  color: var(--page-primary);
   font-weight: 700;
 }
 
@@ -445,19 +445,19 @@
   display: flex;
   align-items: center;
   padding-right: 1mm;
-  border-bottom: 0.2mm solid var(--line);
+  border-bottom: 0.2mm solid var(--page-line);
   font-size: 2.3mm;
   overflow: hidden;
   white-space: nowrap;
 }
 
 .blk-habits__cell {
-  border-right: 0.2mm solid var(--line);
-  border-bottom: 0.2mm solid var(--line);
+  border-right: 0.2mm solid var(--page-line);
+  border-bottom: 0.2mm solid var(--page-line);
 }
 
 .blk-habits__cell.is-weekend {
-  background: var(--soft);
+  background: var(--page-soft);
 }
 
 /* --- year in pixels --- */
@@ -476,7 +476,7 @@
 .blk-pixels__month {
   text-align: center;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--page-primary);
 }
 
 .blk-pixels__day {
@@ -484,17 +484,17 @@
   align-items: center;
   justify-content: flex-end;
   padding-right: 0.5mm;
-  color: var(--primary);
+  color: var(--page-primary);
 }
 
 .blk-pixels__cell {
-  border: 0.2mm solid var(--line);
+  border: 0.2mm solid var(--page-line);
   border-radius: 0.5mm;
 }
 
 .blk-pixels__cell.is-empty {
   border: 0;
-  background: var(--soft);
+  background: var(--page-soft);
 }
 
 /* --- month boxes (year) --- */
@@ -512,7 +512,7 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
-  border: 0.25mm solid var(--line);
+  border: 0.25mm solid var(--page-line);
   border-radius: 1.5mm;
   padding: 1mm 1.5mm;
 }
@@ -520,5 +520,5 @@
 .blk-mboxes__name {
   font-size: 2.6mm;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--page-primary);
 }
