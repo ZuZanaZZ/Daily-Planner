@@ -6,13 +6,14 @@ export const DEFAULT_MARGINS: Margins = { top: 8, bottom: 8, inner: 15, outer: 8
 /** Sections of the editor's page list. */
 export type PageSection = 'cover' | 'year' | 'month' | 'weekly' | 'daily' | 'notes';
 
+// Decides the order of selection buttons.
 export const PAGE_SECTIONS: { section: PageSection; label: string }[] = [
   { section: 'cover', label: 'Cover' },
+    { section: 'notes', label: 'Notes' },
   { section: 'year', label: 'Yearly' },
   { section: 'month', label: 'Monthly' },
   { section: 'weekly', label: 'Weekly'},
   { section: 'daily', label: 'Daily' },
-  { section: 'notes', label: 'Notes' },
 ];
 
 /**

@@ -97,9 +97,8 @@ export function Editor() {
         <PlannerFields />
         <h3>Pages</h3>
         <div className="ed-pages">
-          {PAGE_SECTIONS.map(({ section, label }) => (
+          {PAGE_SECTIONS.map(({ section }) => (
             <div key={section} className="ed-pages__group">
-              <span className="ed-pages__label">{label}</span>
               {SLOTS.filter((s) => s.section === section).map((s) => (
                 <button
                   key={s.slot}
@@ -112,14 +111,20 @@ export function Editor() {
                   {s.label}
                 </button>
               ))}
-              {section === 'notes' && slot === 'notes' && (
-                <>
-                  <NotesFields />
-                  <p className="ed-hint">Number of notes in each spot.</p>
-                </>
-              )}
-              {section === 'weekly' && slot === 'weekly' && (
-                <>
+            </div>
+          ))}
+        </div>
+        {(slot === 'notes' || slot === 'weekly') && (
+          <div className="ed-page-options">
+            {slot === 'notes' && (
+              <>
+                <NotesFields />
+                <p className="ed-hint">Number of notes in each spot.</p>
+              </>
+            )}
+            {slot === 'weekly' && (
+              <>
+                <div className={`notes-fields__row${state.settings.weekly ? '' : ' is-off'}`}>
                   <label className="notes-fields__check">
                     <input
                       type="checkbox"
@@ -128,12 +133,12 @@ export function Editor() {
                     />
                     Include weekly pages in the planner
                   </label>
-                  <p className="ed-hint">Adds one page after every week.</p>
-                </>
-              )}
-            </div>
-          ))}
-        </div>
+                </div>
+                <p className="ed-hint">Adds one page after every week.</p>
+              </>
+            )}
+          </div>
+        )}
         <h3>Blocks</h3>
         <BlockPalette key={info.group} group={info.group} onAdd={addBlock} />
       </aside>

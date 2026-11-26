@@ -42,6 +42,7 @@ body {
 }
 
 .toolbar h1 {
+  width: 230px;
   margin: 0 8px 0 0;
   font-size: var(--ui-text-lg);
 }
@@ -343,11 +344,37 @@ body {
   cursor: pointer;
 }
 
-.notes-fields__check input {
-  width: 15px;
-  height: 15px;
+/* Checkboxes: rounded and purple when ticked. Applies to every checkbox in the app UI
+   (the planner pages draw their own checkboxes in page.css). */
+input[type='checkbox'] {
+  appearance: none;
+  flex: none;
+  width: 16px;
+  height: 16px;
   margin: 0;
-  accent-color: var(--ui-primary);
+  border: 1px solid var(--ui-primary);
+  border-radius: var(--ui-radius-sm);
+  background: var(--ui-surface) center / 12px no-repeat;
+  cursor: pointer;
+}
+
+input[type='checkbox']:hover {
+  background-color: var(--ui-primary-soft);
+}
+
+input[type='checkbox']:checked {
+  background-color: var(--ui-primary);
+  background-image: var(--ui-check);
+}
+
+input[type='checkbox']:focus-visible {
+  outline: 2px solid var(--ui-primary-light);
+  outline-offset: 2px;
+}
+
+input[type='checkbox']:disabled {
+  opacity: 0.45;
+  cursor: default;
 }
 
 .notes-fields__count {

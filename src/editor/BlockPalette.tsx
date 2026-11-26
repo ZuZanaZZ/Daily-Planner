@@ -6,8 +6,8 @@ import { useState } from 'react';
 
 const GROUP_LABEL: Record<BlockGroup, string> = {
   daily: 'Daily',
-  month: 'Month',
-  year: 'Year',
+  month: 'Monthly',
+  year: 'Yearly',
   general: 'General',
 };
 

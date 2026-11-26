@@ -41,7 +41,7 @@ function describePage(p: PlannerPage): string {
     case 'cover':
       return 'Cover';
     case 'year':
-      return 'Year';
+      return 'Yearly';
     case 'month-spread':
     case 'month-plan':
       return monthName(LOCALE, ctx.month);
