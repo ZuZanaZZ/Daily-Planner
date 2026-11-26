@@ -38,7 +38,7 @@ export interface Theme {
   font: string;
 }
 
-export type PageKind = 'cover' | 'year' | 'month-spread' | 'month-plan' | 'daily' | 'notes';
+export type PageKind = 'cover' | 'year' | 'month-spread' | 'month-plan' | 'weekly' | 'daily' | 'notes';
 
 /** Which palette section a block belongs to. */
 export type BlockGroup = 'daily' | 'month' | 'year' | 'general';
@@ -62,7 +62,7 @@ export interface PageTemplate {
 }
 
 /** The editable page designs that make up a planner. */
-export type TemplateSlot = 'cover' | 'year' | 'yearPlan' | 'monthCalendar' | 'monthPlan' | 'daily' | 'notes';
+export type TemplateSlot = 'cover' | 'year' | 'yearPlan' | 'monthCalendar' | 'monthPlan' | 'weekly' | 'daily' | 'notes';
 export type TemplateSet = Record<TemplateSlot, PageTemplate>;
 
 export interface PlannerConfig {
@@ -97,7 +97,8 @@ export interface PageContext {
   kind: PageKind;
   year: number;
   month: number; // 0-11
-  date?: Date; // set for daily pages
+  week?: number; // number of the week for weekly pages
+  date?: Date;
   weekStart: 0 | 1; // 0 = Sunday, 1 = Monday
   locale: string;
   theme: Theme;

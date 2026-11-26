@@ -18,6 +18,14 @@ export function Header({ ctx, props }: BlockProps<{ align: 'left' | 'center' | '
     );
   }
 
+  if (ctx.kind === 'weekly') {
+    return (
+      <div className={cls}>
+        <span className="blk-header__title">Week {ctx.week}</span>
+      </div>
+    );
+  }
+  
   if (ctx.kind === 'cover') {
     return (
       <div className={`${cls} blk-header--cover`}>

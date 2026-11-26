@@ -37,7 +37,8 @@ export function Editor() {
     weekStart,
     locale: LOCALE,
     theme: kind === 'cover' || kind === 'year' ? DEFAULT_THEME : MONTH_THEMES[month],
-    date: kind === 'daily' ? new Date(year, month, SAMPLE_DAY) : undefined,
+    date: kind === 'daily' || kind === 'weekly' ? new Date(year, month, SAMPLE_DAY) : undefined,
+    week: kind === 'weekly' ? 1 : undefined,
   };
 
   const addBlock = (type: string) => {
@@ -114,7 +115,20 @@ export function Editor() {
               {section === 'notes' && slot === 'notes' && (
                 <>
                   <NotesFields />
-                  <p className="ed-hint">The number is how many notes pages go in each spot.</p>
+                  <p className="ed-hint">Number of notes in each spot.</p>
+                </>
+              )}
+              {section === 'weekly' && slot === 'weekly' && (
+                <>
+                  <label className="notes-fields__check">
+                    <input
+                      type="checkbox"
+                      checked={state.settings.weekly}
+                      onChange={(e) => dispatch({ type: 'setSettings', settings: { weekly: e.target.checked } })}
+                    />
+                    Include weekly pages in the planner
+                  </label>
+                  <p className="ed-hint">Adds one page after every week.</p>
                 </>
               )}
             </div>

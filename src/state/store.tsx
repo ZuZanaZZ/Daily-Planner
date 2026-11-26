@@ -5,6 +5,7 @@ import { DEFAULT_NOTES, type NotesSettings, type PlacedBlock, type TemplateSet, 
 export interface Settings {
   year: number;
   weekStart: 0 | 1;
+  weekly: true | false;
   layout: 'a4' | 'a5';
   flip: 'short' | 'long';
   sides: 'double' | 'single';
@@ -137,6 +138,7 @@ function initialState(): State {
     settings: {
       year: new Date().getFullYear() + 1,
       weekStart: 1,
+      weekly: false,
       layout: 'a4',
       flip: 'short',
       sides: 'double',

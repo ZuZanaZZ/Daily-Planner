@@ -45,6 +45,10 @@ function describePage(p: PlannerPage): string {
     case 'month-spread':
     case 'month-plan':
       return monthName(LOCALE, ctx.month);
+    case 'weekly':
+      return ctx.date
+        ? formatDate(LOCALE, ctx.date, { weekday: 'short', day: 'numeric', month: 'short' })
+        : 'Week'
     case 'daily':
       return ctx.date
         ? formatDate(LOCALE, ctx.date, { weekday: 'short', day: 'numeric', month: 'short' })
