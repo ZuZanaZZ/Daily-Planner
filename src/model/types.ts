@@ -68,6 +68,7 @@ export type TemplateSet = Record<TemplateSlot, PageTemplate>;
 export interface PlannerConfig {
   year: number;
   weekStart: 0 | 1;
+  weekly: true | false;
   locale: string;
   margins: Margins;
   notes: NotesSettings;

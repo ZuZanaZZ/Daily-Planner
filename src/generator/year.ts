@@ -22,6 +22,7 @@ export function buildYear(config: PlannerConfig, templates: TemplateSet): Planne
     const n = config.notes[p];
     return n.enabled ? Math.max(0, Math.min(100, Math.floor(Number(n.count) || 0))) : 0;
   };
+  let weekNo = 0;
   const lastDayOfWeek = (config.weekStart + 6) % 7;
   const base = { year: config.year, weekStart: config.weekStart, locale: config.locale };
 
@@ -56,7 +57,11 @@ export function buildYear(config: PlannerConfig, templates: TemplateSet): Planne
 
       // A week ends on its last weekday; the final days of the year close the last week.
       const endOfWeek = date.getDay() === lastDayOfWeek || (m === 11 && d === days);
-      if (endOfWeek) for (let i = 0; i < notesAt('week'); i++) push('notes', m);
+      if (endOfWeek) {
+        weekNo++;
+        if (config.weekly) push('weekly', m, { date, week: weekNo });
+        for (let i = 0; i < notesAt('week'); i++) push('notes', m);
+      }
     }
 
     for (let i = 0; i < notesAt('month'); i++) push('notes', m);

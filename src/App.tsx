@@ -11,17 +11,17 @@ const params = new URLSearchParams(window.location.search);
 
 export function App() {
   const { state } = useStore();
-  const { year, weekStart, layout, flip, notes, sides } = state.settings;
+  const { year, weekStart, weekly, layout, flip, notes, sides } = state.settings;
   const [view, setView] = useState<'editor' | 'year'>(params.get('view') === 'year' ? 'year' : 'editor');
   const [printing, setPrinting] = useState(false);
 
   const pages = useMemo(
     () =>
       buildYear(
-        { year, weekStart, locale: LOCALE, margins: DEFAULT_MARGINS, notes, sides },
+        { year, weekStart, weekly, locale: LOCALE, margins: DEFAULT_MARGINS, notes, sides },
         state.templates,
       ),
-    [year, weekStart, notes, sides, state.templates],
+    [year, weekStart, weekly, notes, sides, state.templates],
   );
 
   // Render the full year first, then open the print dialog.
